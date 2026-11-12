@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Productos AP · Vendedor</title>
+<style>
+:root{--bg:#fbfaf5;--card:#fff;--ink:#1c1b19;--mute:#6b675f;--line:#e6e2d8;--price:#15803d;--wbg:#fff3cf;--wink:#6b4200;--chip:#f0ede2;--btn:#15803d;--btnink:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16150f;--card:#201f18;--ink:#f1efe7;--mute:#a09b8c;--line:#35332a;--price:#6ee7a0;--wbg:#3a2f0b;--wink:#ffd98a;--chip:#2d2b21;--btn:#6ee7a0;--btnink:#10200f}}
+:root[data-theme="dark"]{--bg:#16150f;--card:#201f18;--ink:#f1efe7;--mute:#a09b8c;--line:#35332a;--price:#6ee7a0;--wbg:#3a2f0b;--wink:#ffd98a;--chip:#2d2b21;--btn:#6ee7a0;--btnink:#10200f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;padding-bottom:96px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;padding:12px 14px 8px;border-bottom:1px solid var(--line)}
+h1{margin:0 0 8px;font-size:22px}h1 small{font-weight:400;font-size:13px;color:var(--mute);margin-left:6px}
+input,button{font:inherit;color:var(--ink)}
+#q,.fld{width:100%;padding:11px 12px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.tabs{display:flex;gap:6px;margin:10px 0 6px;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:0 0 auto;padding:10px 14px;white-space:nowrap;border:1px solid var(--line);border-radius:10px;background:var(--card);font-weight:600;font-size:13px}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+.opts{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--mute)}.opts label{display:flex;align-items:center;gap:6px}
+.vt .pf{display:none}
+main{padding:4px 14px 20px;max-width:760px;margin:0 auto}
+.tab{display:none}.tab.on{display:block}
+h2.L{margin:18px 0 6px;font-size:15px;color:var(--mute);border-bottom:1px solid var(--line);padding-bottom:3px}
+.it{display:flex;justify-content:space-between;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:6px 0;cursor:pointer}
+.it:active{transform:scale(.99);border-color:var(--price)}
+.n{font-weight:600}.m{margin-top:2px}
+.chip{display:inline-block;font-size:12px;background:var(--chip);color:var(--mute);border-radius:99px;padding:1px 8px}
+.cost{font-size:13px;color:var(--mute);margin-top:4px}.cost span{margin-right:10px;display:inline-block}
+.nocost .cost{display:none}
+.r{text-align:right;flex:none}.price{font-size:26px;font-weight:800;color:var(--price);line-height:1.05}.u{font-size:11px;color:var(--mute)}
+.warn{margin-top:6px;font-size:12.5px;background:var(--wbg);color:var(--wink);border-radius:8px;padding:5px 8px}.warn i{opacity:.75}
+.hide{display:none!important}
+#none{text-align:center;color:var(--mute);padding:30px 0}
+#bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px))}
+.btn{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:var(--btn);color:var(--btnink);font-weight:800;font-size:17px}
+.btn.s{background:var(--chip);color:var(--ink);font-weight:600;font-size:15px;padding:11px}
+.ov{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:100%;max-width:760px;max-height:88%;overflow:auto;border-radius:18px 18px 0 0;padding:16px 14px calc(16px + env(safe-area-inset-bottom,0px))}
+.sheet h3{margin:0 0 10px;font-size:19px}
+.row{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--line)}
+.row .nm{flex:1;min-width:0}.row .nm b{display:block}.row .nm small{color:var(--mute)}
+.st{display:flex;align-items:center;gap:6px}.st button{width:36px;height:36px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:20px;font-weight:700}
+.st input{width:74px;padding:7px;border:1px solid var(--line);border-radius:9px;background:var(--card);text-align:center}
+.lt{min-width:62px;text-align:right;font-weight:700}
+.x{border:0;background:none;color:var(--mute);font-size:20px;padding:4px 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chips button{padding:9px 14px;border:1px solid var(--line);border-radius:99px;background:var(--card);font-weight:600}
+.tot{display:flex;justify-content:space-between;font-size:22px;font-weight:800;margin:12px 0}
+.gap{height:8px}
+.sale{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
+.sale .h{display:flex;justify-content:space-between;font-weight:700}.sale small{color:var(--mute)}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;z-index:60;font-size:14px;max-width:90%}
+.usr{float:right;font-size:13px;font-weight:400;color:var(--mute)}.usr .x{font-size:13px;padding:2px 6px;text-decoration:underline}
+.gt{z-index:100;background:var(--bg);align-items:center}.gs{border-radius:18px;max-width:420px}
+select.fld{appearance:auto}
+.chipb{padding:9px 14px;border:1px solid var(--line);border-radius:99px;background:var(--card);font-weight:600}
+.ir{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
+.ih{display:flex;justify-content:space-between;align-items:center;gap:8px}.ir small{display:block;color:var(--mute);margin-top:2px}
+.ia{display:flex;gap:6px;margin-top:8px}.ia .fld{flex:1;min-width:0;padding:10px}.ia select.fld{flex:0 0 76px}.ia .btn{flex:0 0 auto;width:auto;padding:0 14px;font-size:15px}
+.stk{font-size:11px;color:var(--mute);margin-top:2px}.it.out{opacity:.5}
+.chips button.on{background:var(--ink);color:var(--bg)}
+.kp{display:flex;gap:10px;margin:10px 0}.kp>div{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kp b{display:block;font-size:22px}.kp small{color:var(--mute)}
+.up{color:var(--price);font-weight:600}.dn{color:#d14343;font-weight:600}
+.split{display:flex;align-items:center;gap:16px;margin:14px 0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+.donut{width:96px;height:96px;border-radius:50%;flex:none;position:relative}.donut::after{content:"";position:absolute;inset:22px;border-radius:50%;background:var(--card)}
+.lg div{margin:5px 0;font-size:15px}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.hd{font-weight:700;font-size:17px;margin:16px 0 4px}.hd small{font-weight:400;color:var(--mute);font-size:12px}
+.rk{margin:12px 0}.rk .t{display:flex;justify-content:space-between;gap:10px;font-size:15px}.rk .t span{font-weight:700;color:var(--price);flex:none}
+.bar{height:12px;border-radius:99px;background:var(--chip);overflow:hidden;margin:5px 0 3px}.bar i{display:block;height:100%;border-radius:99px;background:var(--price)}.bar.p i{background:#f59e0b}
+.rk small{color:var(--mute)}
+.np{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}.np>*{margin-top:8px}.np>b:first-child{margin-top:0;display:block}.r2{display:flex;gap:8px}.r2>*{flex:1;min-width:0}.r2 .btn{padding:0 10px;font-size:15px}
+@media print{header,#bar,#toast,#xl,#pr,#vd,#who,.sale .x,#gate,.tabs{display:none!important}.tab{display:none}.tab.on{display:block}body{padding:0;background:#fff;color:#000}.sale{break-inside:avoid;border-color:#999;background:#fff;color:#000}.sale small,h2.L{color:#333}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head><body>
+<header>
+<h1>Productos AP<small id="cnt"></small><span class="usr"><button id="sy" class="x">☁</button></span></h1>
+<div class="pf"><input id="q" type="search" placeholder="Buscar producto…" autocomplete="off"></div>
+<div class="tabs"><button class="on" data-t="pz">Pieza (117)</button><button data-t="gr">Granel (45)</button><button data-t="pa">Palomitas</button><button data-t="vt">Ventas</button><button data-t="st">📈 Lo más vendido</button></div>
+<div class="opts pf"><label><input type="checkbox" id="c"> Mostrar costos (Excel anterior)</label><label class="hide"><input type="checkbox" id="w"></label></div>
+</header>
+<main id="m" class="nocost">
+<section class="tab on" id="pz">
+<div class="g"><h2 class="L">A</h2>
+<article class="it" data-id="PZ:alegria-arandano#0" data-src="PZ3" data-t="pz" data-p="1500" data-n="Alegria arándano" data-l="Merced" data-k="alegria arandano merced"><div class="l"><div class="n">Alegria arándano</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $8.50</span><span class="ct">Costo $42.50 / 5 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:alegria-chocolate#0" data-src="PZ4" data-t="pz" data-p="1200" data-n="Alegria chocolate" data-l="Merced" data-k="alegria chocolate merced"><div class="l"><div class="n">Alegria chocolate</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $5.50</span></div></div><div class="r"><div class="price">$12</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">B</h2>
+<article class="it" data-id="PZ:balon-chutazo#0" data-src="PZ5" data-t="pz" data-p="900" data-n="Balón chutazo" data-l="Candy Cami" data-k="balon chutazo candy cami"><div class="l"><div class="n">Balón chutazo</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $4.41</span><span class="ct">Costo $88.10 / 20 pz</span></div></div><div class="r"><div class="price">$9</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:bocadin#0" data-src="PZ6" data-t="pz" data-p="500" data-n="Bocadin" data-l="La Nacional Jiu" data-k="bocadin la nacional jiu"><div class="l"><div class="n">Bocadin</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $1</span><span class="ct">Costo $61.50 / 50 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:bombon-choco-bianchi#0" data-src="PZ7" data-t="pz" data-p="1500" data-n="Bombón choco Bianchi" data-l="Candy Cami" data-k="bombon choco bianchi candy cami"><div class="l"><div class="n">Bombón choco Bianchi</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7.50</span><span class="ct">Costo $75.86 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:bombon-gigante#0" data-src="PZ8" data-t="pz" data-p="500" data-n="Bombon gigante" data-l="Candy Cami" data-k="bombon gigante candy cami"><div class="l"><div class="n">Bombon gigante</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2.26</span><span class="ct">Costo $67.83 / 30 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:bon-o-bon#0" data-src="PZ9" data-t="pz" data-p="800" data-n="Bon o bon" data-l="Candy Cami" data-k="bon o bon candy cami"><div class="l"><div class="n">Bon o bon</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="ct">Costo $86.28</span></div></div><div class="r"><div class="price">$8</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:bubaloo-chicle#0" data-src="PZ10" data-t="pz" data-p="300" data-n="Bubaloo chicle" data-l="Candy Cami" data-k="bubaloo chicle candy cami"><div class="l"><div class="n">Bubaloo chicle</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.84</span><span class="ct">Costo $39.33 / 47 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:bubaloo-tiritas#0" data-src="PZ11" data-t="pz" data-p="1500" data-n="Bubaloo tiritas" data-l="La Nacional Jiu" data-k="bubaloo tiritas la nacional jiu"><div class="l"><div class="n">Bubaloo tiritas</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $9</span><span class="ct">Costo $72.59 / 8 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">C</h2>
+<article class="it" data-id="PZ:carlos-v-2stick#0" data-src="PZ12" data-t="pz" data-p="1600" data-n="Carlos V (2stick)" data-l="Candy Cami" data-k="carlos v (2stick) candy cami"><div class="l"><div class="n">Carlos V (2stick)</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $10</span><span class="ct">Costo $153.72 / 15 pz</span></div></div><div class="r"><div class="price">$16</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:cazares#0" data-src="PZ13" data-t="pz" data-p="1300" data-n="Cazares" data-l="" data-k="cazares"><div class="l"><div class="n">Cazares</div><div class="m"></div><div class="cost"><span class="cu">Costo pz $8</span></div></div><div class="r"><div class="price">$13</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:chamoy-preparado#0" data-src="PZ14" data-t="pz" data-p="8000" data-n="Chamoy preparado" data-l="AP" data-k="chamoy preparado ap"><div class="l"><div class="n">Chamoy preparado</div><div class="m"><span class="chip">AP</span></div><div class="cost"><span class="ct">1/2 lt</span></div></div><div class="r"><div class="price">$80</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:chupabarrita-tixtix#0" data-src="PZ15" data-t="pz" data-p="1000" data-n="Chupabarrita Tixtix" data-l="Candy Cami" data-k="chupabarrita tixtix candy cami"><div class="l"><div class="n">Chupabarrita Tixtix</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $4</span><span class="ct">Costo $73.96 / 18 pz</span></div></div><div class="r"><div class="price">$10</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:churritos-charly#0" data-src="PZ16" data-t="pz" data-p="1300" data-n="Churritos Charly" data-l="Merced" data-k="churritos charly merced"><div class="l"><div class="n">Churritos Charly</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $8</span></div></div><div class="r"><div class="price">$13</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:combo-vero#0" data-src="PZ17" data-t="pz" data-p="1000" data-n="Combo Vero" data-l="La Nacional Jiu" data-k="combo vero la nacional jiu"><div class="l"><div class="n">Combo Vero</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $5</span><span class="ct">Costo $49.50 / 10 pz</span></div></div><div class="r"><div class="price">$10</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:conejo-turin#0" data-src="PZ18" data-t="pz" data-p="1800" data-n="Conejo Turin" data-l="Candy Cami" data-k="conejo turin candy cami"><div class="l"><div class="n">Conejo Turin</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $10.50</span><span class="ct">Costo $210.80 / 20 pz</span></div></div><div class="r"><div class="price">$18</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:crayon#0" data-src="PZ19" data-t="pz" data-p="1500" data-n="Crayón" data-l="Candy Cami" data-k="crayon candy cami"><div class="l"><div class="n">Crayón</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7.50</span><span class="ct">Costo $75.22 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:crazy-dips#0" data-src="PZ20" data-t="pz" data-p="1000" data-n="Crazy Dips" data-l="La Nacional Jiu" data-k="crazy dips la nacional jiu"><div class="l"><div class="n">Crazy Dips</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $5</span><span class="ct">Costo $51.44 / 10 pz</span></div></div><div class="r"><div class="price">$10</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:crunch#0" data-src="PZ21" data-t="pz" data-p="1900" data-n="Crunch" data-l="La Nacional Jiu" data-k="crunch la nacional jiu"><div class="l"><div class="n">Crunch</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $13</span><span class="ct">Costo $78.18 / 6 pz</span></div></div><div class="r"><div class="price">$19</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">D</h2>
+<article class="it" data-id="PZ:damy-dulce#0" data-src="PZ22" data-t="pz" data-p="300" data-n="Damy dulce" data-l="Candy Cami" data-k="damy dulce candy cami"><div class="l"><div class="n">Damy dulce</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.66</span><span class="ct">Costo $66.65 / 100 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:dartanan#0" data-src="PZ23" data-t="pz" data-p="600" data-n="Dartañan" data-l="Candy Cami" data-k="dartanan candy cami"><div class="l"><div class="n">Dartañan</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2</span><span class="ct">Costo $53.45 / 24 pz</span></div></div><div class="r"><div class="price">$6</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:dedo-indy#0" data-src="PZ24" data-t="pz" data-p="600" data-n="Dedo Indy" data-l="Candy Cami" data-k="dedo indy candy cami"><div class="l"><div class="n">Dedo Indy</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $3</span><span class="ct">Costo $35.32 / 12 pz</span></div></div><div class="r"><div class="price">$6</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:deemint-2#0" data-src="PZ25" data-t="pz" data-p="400" data-n="Deemint (2)" data-l="Candy Cami" data-k="deemint (2) candy cami"><div class="l"><div class="n">Deemint (2)</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.90</span><span class="ct">Costo $76.36 / 40 pz</span></div></div><div class="r"><div class="price">$4</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:dragoncitos#0" data-src="PZ26" data-t="pz" data-p="300" data-n="Dragoncitos" data-l="Candy Cami" data-k="dragoncitos candy cami"><div class="l"><div class="n">Dragoncitos</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.25</span><span class="ct">Costo $25.89 / 100 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:duvalin-trisabor#0" data-src="PZ27" data-t="pz" data-p="500" data-n="Duvalin trisabor" data-l="Candy Cami" data-k="duvalin trisabor candy cami"><div class="l"><div class="n">Duvalin trisabor</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.60</span><span class="ct">Costo $29.40 / 18 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">F</h2>
+<article class="it" data-id="PZ:frescas#0" data-src="PZ28" data-t="pz" data-p="2500" data-n="Frescas" data-l="Candy Cami" data-k="frescas candy cami"><div class="l"><div class="n">Frescas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $15.94</span><span class="ct">Costo $143.53 / 9 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:frutos-secos-habi#0" data-src="PZ29" data-t="pz" data-p="2000" data-n="Frutos secos Habi" data-l="Merced" data-k="frutos secos habi merced"><div class="l"><div class="n">Frutos secos Habi</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $11</span></div></div><div class="r"><div class="price">$20</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">G</h2>
+<article class="it" data-id="PZ:genki-nishkawa#0" data-src="PZ30" data-t="pz" data-p="3000" data-n="Genki Nishkawa" data-l="Merced" data-k="genki nishkawa merced"><div class="l"><div class="n">Genki Nishkawa</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $22</span></div></div><div class="r"><div class="price">$30</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:glorias#0" data-src="PZ31" data-t="pz" data-p="1300" data-n="Glorias" data-l="Candy Cami" data-k="glorias candy cami"><div class="l"><div class="n">Glorias</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $9.60</span><span class="ct">Costo $96.53 / 10 pz</span></div></div><div class="r"><div class="price">$13</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:goma-gummy-pop-llave#0" data-src="PZ32" data-t="pz" data-p="500" data-n="Goma Gummy pop llave" data-l="Candy Cami" data-k="goma gummy pop llave candy cami"><div class="l"><div class="n">Goma Gummy pop llave</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.37</span><span class="ct">Costo $34.41 / 25 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:gomas-sabores-varios#0" data-src="PZ33" data-t="pz" data-p="1600" data-n="Gomas sabores varios" data-l="Merced" data-k="gomas sabores varios merced"><div class="l"><div class="n">Gomas sabores varios</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $10</span></div></div><div class="r"><div class="price">$16</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:gusano-lucas#0" data-src="PZ34" data-t="pz" data-p="1500" data-n="Gusano Lucas" data-l="Candy Cami" data-k="gusano lucas candy cami"><div class="l"><div class="n">Gusano Lucas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7</span><span class="ct">Costo $71.77 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">H</h2>
+<article class="it" data-id="PZ:habibi-pepitas#0" data-src="PZ35" data-t="pz" data-p="2800" data-n="Habibi pepitas" data-l="Merced" data-k="habibi pepitas merced"><div class="l"><div class="n">Habibi pepitas</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $24</span></div></div><div class="r"><div class="price">$28</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:hershey-barra#0" data-src="PZ36" data-t="pz" data-p="1700" data-n="Hershey barra" data-l="Candy Cami" data-k="hershey barra candy cami"><div class="l"><div class="n">Hershey barra</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $12</span><span class="ct">Costo $70.97 / 6 pz</span></div></div><div class="r"><div class="price">$17</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:huba-bubba-chicle#0" data-src="PZ37" data-t="pz" data-p="3000" data-n="Huba bubba chicle" data-l="Candy Cami" data-k="huba bubba chicle candy cami"><div class="l"><div class="n">Huba bubba chicle</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $19.72</span><span class="ct">Costo $118.34 / 6 pz</span></div></div><div class="r"><div class="price">$30</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:huba-bubba-chicle#1" data-src="PZ38" data-t="pz" data-p="3000" data-n="Huba bubba chicle" data-l="La Nacional Jiu" data-k="huba bubba chicle la nacional jiu"><div class="l"><div class="n">Huba bubba chicle</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $20.70</span><span class="ct">Costo $124.57 / 6 pz</span></div></div><div class="r"><div class="price">$30</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">I</h2>
+<article class="it" data-id="PZ:ice-breakers#0" data-src="PZ39" data-t="pz" data-p="1400" data-n="Ice breakers" data-l="La Nacional Jiu" data-k="ice breakers la nacional jiu"><div class="l"><div class="n">Ice breakers</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $7</span><span class="ct">Costo $82.90 / 12 pz</span></div></div><div class="r"><div class="price">$14</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:icee-caja-ch#0" data-src="PZ40" data-t="pz" data-p="2000" data-n="Icee caja CH" data-l="" data-k="icee caja ch"><div class="l"><div class="n">Icee caja CH</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$20</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:icee-caja-g#0" data-src="PZ41" data-t="pz" data-p="2500" data-n="Icee caja G" data-l="" data-k="icee caja g"><div class="l"><div class="n">Icee caja G</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:icee-mini#0" data-src="PZ42" data-t="pz" data-p="300" data-n="Icee mini" data-l="La Nacional Jiu" data-k="icee mini la nacional jiu"><div class="l"><div class="n">Icee mini</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $1</span><span class="ct">Costo $26 / 10 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:icee-winis#0" data-src="PZ43" data-t="pz" data-p="600" data-n="Icee winis" data-l="Candy Cami" data-k="icee winis candy cami"><div class="l"><div class="n">Icee winis</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2</span><span class="ct">Costo $56.04 / 24 pz</span></div></div><div class="r"><div class="price">$6</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:inspireka-arena-magica#0" data-src="PZ44" data-t="pz" data-p="2500" data-n="Inspireka arena magica" data-l="La Nacional Jiu" data-k="inspireka arena magica la nacional jiu"><div class="l"><div class="n">Inspireka arena magica</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $17</span><span class="ct">Costo $68.50 / 4 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:inspireka-armable#0" data-src="PZ45" data-t="pz" data-p="2500" data-n="Inspireka armable" data-l="La Nacional Jiu" data-k="inspireka armable la nacional jiu"><div class="l"><div class="n">Inspireka armable</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $18.50</span><span class="ct">Costo $74.76 / 4 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:inspireka-konstruye#0" data-src="PZ46" data-t="pz" data-p="2500" data-n="Inspireka konstruye" data-l="La Nacional Jiu" data-k="inspireka konstruye la nacional jiu"><div class="l"><div class="n">Inspireka konstruye</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $19</span><span class="ct">Costo $76 / 4 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:inspireka-pinta-fruta#0" data-src="PZ47" data-t="pz" data-p="2500" data-n="Inspireka Pinta fruta" data-l="La Nacional Jiu" data-k="inspireka pinta fruta la nacional jiu"><div class="l"><div class="n">Inspireka Pinta fruta</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $19</span><span class="ct">Costo $76.76 / 4 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">J</h2>
+<article class="it" data-id="PZ:jollyrancher#0" data-src="PZ48" data-t="pz" data-p="1500" data-n="Jollyrancher" data-l="Candy Cami" data-k="jollyrancher candy cami"><div class="l"><div class="n">Jollyrancher</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7</span><span class="ct">Costo $84.03 / 12 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">K</h2>
+<article class="it" data-id="PZ:karla-tamarindo#0" data-src="PZ49" data-t="pz" data-p="1800" data-n="Karla tamarindo" data-l="Candy Cami" data-k="karla tamarindo candy cami"><div class="l"><div class="n">Karla tamarindo</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"></div></div><div class="r"><div class="price">$18</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:kinder-barra#0" data-src="PZ50" data-t="pz" data-p="1200" data-n="Kinder barra" data-l="Candy Cami" data-k="kinder barra candy cami"><div class="l"><div class="n">Kinder barra</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $6</span><span class="ct">Costo $106.52 / 18 pz</span></div></div><div class="r"><div class="price">$12</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:kinder-bueno#0" data-src="PZ51" data-t="pz" data-p="2500" data-n="Kinder bueno" data-l="La Nacional Jiu" data-k="kinder bueno la nacional jiu"><div class="l"><div class="n">Kinder bueno</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $19</span><span class="ct">Costo $192.25 / 10 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:kinder-delice#0" data-src="PZ52" data-t="pz" data-p="1800" data-n="Kinder delice" data-l="Candy Cami" data-k="kinder delice candy cami"><div class="l"><div class="n">Kinder delice</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $12</span><span class="ct">Costo $118.07 / 10 pz</span></div></div><div class="r"><div class="price">$18</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:kinder-huevo#0" data-src="PZ53" data-t="pz" data-p="3000" data-n="Kinder huevo" data-l="La Nacional Jiu" data-k="kinder huevo la nacional jiu"><div class="l"><div class="n">Kinder huevo</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $21</span><span class="ct">Costo $249.33 / 12 pz</span></div></div><div class="r"><div class="price">$30</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:kisses#0" data-src="PZ54" data-t="pz" data-p="200" data-n="Kisses" data-l="Candy Cami" data-k="kisses candy cami" data-w=1><div class="l"><div class="n">Kisses</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="ct">Costo $265.65 / 1k</span></div></div><div class="r"><div class="price">$2</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:kit-kat#0" data-src="PZ55" data-t="pz" data-p="2400" data-n="Kit Kat" data-l="La Nacional Jiu" data-k="kit kat la nacional jiu"><div class="l"><div class="n">Kit Kat</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $17.50</span><span class="ct">Costo $157.22 / 9 pz</span></div></div><div class="r"><div class="price">$24</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">L</h2>
+<article class="it" data-id="PZ:lucas-bby-polvo#0" data-src="PZ56" data-t="pz" data-p="1500" data-n="Lucas bby (polvo)" data-l="Candy Cami" data-k="lucas bby (polvo) candy cami"><div class="l"><div class="n">Lucas bby (polvo)</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $6</span><span class="ct">Costo $62.73 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:lucas-goma-mango#0" data-src="PZ57" data-t="pz" data-p="1900" data-n="Lucas goma mango" data-l="La Nacional Jiu" data-k="lucas goma mango la nacional jiu"><div class="l"><div class="n">Lucas goma mango</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $11</span></div></div><div class="r"><div class="price">$19</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:lucas-goma-sandia#0" data-src="PZ58" data-t="pz" data-p="1900" data-n="Lucas goma sandia" data-l="La Nacional Jiu" data-k="lucas goma sandia la nacional jiu"><div class="l"><div class="n">Lucas goma sandia</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $14</span><span class="ct">Costo $85.60 / 6 pz</span></div></div><div class="r"><div class="price">$19</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:lucas-mueca#0" data-src="PZ59" data-t="pz" data-p="1500" data-n="Lucas mueca" data-l="Candy Cami" data-k="lucas mueca candy cami"><div class="l"><div class="n">Lucas mueca</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7</span><span class="ct">Costo $70.14 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">M</h2>
+<article class="it" data-id="PZ:m-m-cacahuate#0" data-src="PZ60" data-t="pz" data-p="2500" data-n="M&amp;m cacahuate" data-l="Candy Cami" data-k="m&amp;m cacahuate candy cami"><div class="l"><div class="n">M&amp;m cacahuate</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:m-m-chocolate#0" data-src="PZ61" data-t="pz" data-p="2300" data-n="M&amp;m chocolate" data-l="Candy Cami" data-k="m&amp;m chocolate candy cami"><div class="l"><div class="n">M&amp;m chocolate</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"></div></div><div class="r"><div class="price">$23</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:marimba#0" data-src="PZ62" data-t="pz" data-p="1000" data-n="Marimba" data-l="La Nacional Jiu" data-k="marimba la nacional jiu"><div class="l"><div class="n">Marimba</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $5</span><span class="ct">Costo $64 / 12 pz</span></div></div><div class="r"><div class="price">$10</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:mazapan#0" data-src="PZ63" data-t="pz" data-p="600" data-n="Mazapan" data-l="Candy Cami" data-k="mazapan candy cami"><div class="l"><div class="n">Mazapan</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $3</span><span class="ct">Costo $79.25 / 30 pz</span></div></div><div class="r"><div class="price">$6</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:mega-astridix#0" data-src="PZ64" data-t="pz" data-p="200" data-n="Mega Astridix" data-l="La Nacional Jiu" data-k="mega astridix la nacional jiu"><div class="l"><div class="n">Mega Astridix</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $0.60</span><span class="ct">Costo $30.38 / 50 pz</span></div></div><div class="r"><div class="price">$2</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:mentos#0" data-src="PZ65" data-t="pz" data-p="1500" data-n="Mentos" data-l="Candy Cami" data-k="mentos candy cami"><div class="l"><div class="n">Mentos</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7</span><span class="ct">Costo $84.78 / 12 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:miguelitos-sobre#0" data-src="PZ66" data-t="pz" data-p="300" data-n="Miguelitos sobre" data-l="Candy Cami" data-k="miguelitos sobre candy cami"><div class="l"><div class="n">Miguelitos sobre</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.33</span><span class="ct">Costo $33.93 / 100 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:milkyway#0" data-src="PZ67" data-t="pz" data-p="2300" data-n="Milkyway" data-l="Candy Cami" data-k="milkyway candy cami"><div class="l"><div class="n">Milkyway</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"></div></div><div class="r"><div class="price">$23</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:monedas-chocolate#0" data-src="PZ68" data-t="pz" data-p="200" data-n="Monedas chocolate" data-l="Candy Cami" data-k="monedas chocolate candy cami"><div class="l"><div class="n">Monedas chocolate</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1</span><span class="ct">Costo $154.41 / 120 pz</span></div></div><div class="r"><div class="price">$2</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">N</h2>
+<article class="it" data-id="PZ:nerds-arcoiris#0" data-src="PZ69" data-t="pz" data-p="6000" data-n="Nerds Arcoiris" data-l="La Nacional Jiu" data-k="nerds arcoiris la nacional jiu"><div class="l"><div class="n">Nerds Arcoiris</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $43.50</span></div></div><div class="r"><div class="price">$60</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:nerds-u-f-46g#0" data-src="PZ70" data-t="pz" data-p="3500" data-n="Nerds U-F 46g" data-l="" data-k="nerds u-f 46g"><div class="l"><div class="n">Nerds U-F 46g</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$35</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:nerds-uva-fram#0" data-src="PZ71" data-t="pz" data-p="6000" data-n="Nerds Uva-Fram" data-l="La Nacional Jiu" data-k="nerds uva-fram la nacional jiu"><div class="l"><div class="n">Nerds Uva-Fram</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $46.50</span></div></div><div class="r"><div class="price">$60</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:nutella-b-ready#0" data-src="PZ72" data-t="pz" data-p="2000" data-n="Nutella B-ready" data-l="" data-k="nutella b-ready"><div class="l"><div class="n">Nutella B-ready</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$20</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:nutella-go#0" data-src="PZ73" data-t="pz" data-p="3500" data-n="Nutella GO" data-l="" data-k="nutella go"><div class="l"><div class="n">Nutella GO</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$35</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">O</h2>
+<article class="it" data-id="PZ:obleas-sevillanas#0" data-src="PZ74" data-t="pz" data-p="1500" data-n="Obleas Sevillanas" data-l="Candy Cami" data-k="obleas sevillanas candy cami"><div class="l"><div class="n">Obleas Sevillanas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $11</span><span class="ct">Costo $266.82 / 25 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:oyuki#0" data-src="PZ75" data-t="pz" data-p="1200" data-n="Oyuki" data-l="Merced" data-k="oyuki merced"><div class="l"><div class="n">Oyuki</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $6</span></div></div><div class="r"><div class="price">$12</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">P</h2>
+<article class="it" data-id="PZ:palanqueta-cacahuate#0" data-src="PZ76" data-t="pz" data-p="1200" data-n="Palanqueta cacahuate" data-l="" data-k="palanqueta cacahuate"><div class="l"><div class="n">Palanqueta cacahuate</div><div class="m"></div><div class="cost"><span class="cu">Costo pz $7.50</span></div></div><div class="r"><div class="price">$12</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:palanqueta-pepita-ch#0" data-src="PZ77" data-t="pz" data-p="1000" data-n="Palanqueta pepita ch" data-l="Merced" data-k="palanqueta pepita ch merced"><div class="l"><div class="n">Palanqueta pepita ch</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $6</span></div></div><div class="r"><div class="price">$10</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-brocha#0" data-src="PZ78" data-t="pz" data-p="500" data-n="Paleta brocha" data-l="Candy Cami" data-k="paleta brocha candy cami"><div class="l"><div class="n">Paleta brocha</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1</span><span class="ct">Costo $65.51 / 48 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-bubbaxtreme#0" data-src="PZ79" data-t="pz" data-p="700" data-n="Paleta Bubbaxtreme" data-l="Candy Cami" data-k="paleta bubbaxtreme candy cami"><div class="l"><div class="n">Paleta Bubbaxtreme</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $3.50</span><span class="ct">Costo $71.32 / 20 pz</span></div></div><div class="r"><div class="price">$7</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-cupido#0" data-src="PZ80" data-t="pz" data-p="500" data-n="Paleta cupido" data-l="Candy Cami" data-k="paleta cupido candy cami"><div class="l"><div class="n">Paleta cupido</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.50</span><span class="ct">Costo $63.41 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-elote#0" data-src="PZ81" data-t="pz" data-p="500" data-n="Paleta elote" data-l="Candy Cami" data-k="paleta elote candy cami"><div class="l"><div class="n">Paleta elote</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.60</span><span class="ct">Costo $64.44 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-mango#0" data-src="PZ82" data-t="pz" data-p="500" data-n="Paleta mango" data-l="Candy Cami" data-k="paleta mango candy cami"><div class="l"><div class="n">Paleta mango</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.50</span><span class="ct">Costo $63.99 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-manita#0" data-src="PZ83" data-t="pz" data-p="500" data-n="Paleta manita" data-l="Candy Cami" data-k="paleta manita candy cami"><div class="l"><div class="n">Paleta manita</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.50</span><span class="ct">Costo $63.41 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-payaso-mini#0" data-src="PZ84" data-t="pz" data-p="1200" data-n="Paleta payaso mini" data-l="Candy Cami" data-k="paleta payaso mini candy cami"><div class="l"><div class="n">Paleta payaso mini</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $6.50</span><span class="ct">Costo $98 / 15 pz</span></div></div><div class="r"><div class="price">$12</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-sandia#0" data-src="PZ85" data-t="pz" data-p="500" data-n="Paleta sandia" data-l="Candy Cami" data-k="paleta sandia candy cami"><div class="l"><div class="n">Paleta sandia</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.40</span><span class="ct">Costo $57.99 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-tarro#0" data-src="PZ86" data-t="pz" data-p="500" data-n="Paleta tarro" data-l="Candy Cami" data-k="paleta tarro candy cami"><div class="l"><div class="n">Paleta tarro</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.50</span><span class="ct">Costo $63.99 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:paleta-tix-tix#0" data-src="PZ87" data-t="pz" data-p="500" data-n="Paleta tix tix" data-l="Candy Cami" data-k="paleta tix tix candy cami"><div class="l"><div class="n">Paleta tix tix</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.77</span><span class="ct">Costo $53.39 / 30 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:panzon-lucas#0" data-src="PZ88" data-t="pz" data-p="1500" data-n="Panzon lucas" data-l="Candy Cami" data-k="panzon lucas candy cami"><div class="l"><div class="n">Panzon lucas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $8.30</span><span class="ct">Costo $83.63 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:panzon-lucas#1" data-src="PZ89" data-t="pz" data-p="1500" data-n="Panzon lucas" data-l="La Nacional Jiu" data-k="panzon lucas la nacional jiu"><div class="l"><div class="n">Panzon lucas</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $8.30</span><span class="ct">Costo $83.99 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:peelerz-variado#0" data-src="PZ90" data-t="pz" data-p="4500" data-n="Peelerz (VARIADO)" data-l="La Nacional Jiu" data-k="peelerz (variado) la nacional jiu"><div class="l"><div class="n">Peelerz (VARIADO)</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $33</span></div></div><div class="r"><div class="price">$45</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:pelon-pelorico#0" data-src="PZ91" data-t="pz" data-p="1300" data-n="Pelon Pelorico" data-l="Candy Cami" data-k="pelon pelorico candy cami"><div class="l"><div class="n">Pelon Pelorico</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $6.50</span><span class="ct">Costo $65.24 / 10 pz</span></div></div><div class="r"><div class="price">$13</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:peloneta-del-puesto#0" data-src="PZ92" data-t="pz" data-p="800" data-n="Peloneta del puesto" data-l="La Nacional Jiu" data-k="peloneta del puesto la nacional jiu"><div class="l"><div class="n">Peloneta del puesto</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $4</span><span class="ct">Costo $39.50 / 10 pz</span></div></div><div class="r"><div class="price">$8</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:pelonetes#0" data-src="PZ93" data-t="pz" data-p="1500" data-n="Pelonetes" data-l="Candy Cami" data-k="pelonetes candy cami"><div class="l"><div class="n">Pelonetes</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7.50</span><span class="ct">Costo $44.97 / 6 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:picafresas#0" data-src="PZ94" data-t="pz" data-p="300" data-n="Picafresas" data-l="Candy Cami" data-k="picafresas candy cami"><div class="l"><div class="n">Picafresas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.62</span><span class="ct">Costo $62.76 / 100 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:picagomas#0" data-src="PZ95" data-t="pz" data-p="300" data-n="Picagomas" data-l="Candy Cami" data-k="picagomas candy cami"><div class="l"><div class="n">Picagomas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.58</span><span class="ct">Costo $58.17 / 100 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:pikaros#0" data-src="PZ96" data-t="pz" data-p="500" data-n="Pikaros" data-l="Candy Cami" data-k="pikaros candy cami"><div class="l"><div class="n">Pikaros</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2.40</span><span class="ct">Costo $60.41 / 25 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:pulparindo#0" data-src="PZ97" data-t="pz" data-p="500" data-n="Pulparindo" data-l="Candy Cami" data-k="pulparindo candy cami"><div class="l"><div class="n">Pulparindo</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $1.83</span><span class="ct">Costo $36.71 / 20 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:pulparindots#0" data-src="PZ98" data-t="pz" data-p="800" data-n="Pulparindots" data-l="Candy Cami" data-k="pulparindots candy cami"><div class="l"><div class="n">Pulparindots</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $3.41</span><span class="ct">Costo $68.35 / 20 pz</span></div></div><div class="r"><div class="price">$8</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">R</h2>
+<article class="it" data-id="PZ:raffaello#0" data-src="PZ99" data-t="pz" data-p="1200" data-n="Raffaello" data-l="" data-k="raffaello"><div class="l"><div class="n">Raffaello</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$12</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:rana-chocolate#0" data-src="PZ100" data-t="pz" data-p="900" data-n="Rana chocolate" data-l="Merced" data-k="rana chocolate merced"><div class="l"><div class="n">Rana chocolate</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo pz $5</span><span class="ct">Costo $65 / 12 pz</span></div></div><div class="r"><div class="price">$9</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:ring-pop#0" data-src="PZ101" data-t="pz" data-p="1500" data-n="Ring pop" data-l="La Nacional Jiu" data-k="ring pop la nacional jiu"><div class="l"><div class="n">Ring pop</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $9</span><span class="ct">Costo $104.50 / 12 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:rocaleta#0" data-src="PZ102" data-t="pz" data-p="1300" data-n="Rocaleta" data-l="Candy Cami" data-k="rocaleta candy cami"><div class="l"><div class="n">Rocaleta</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $6.28</span><span class="ct">Costo $113.16 / 18 pz</span></div></div><div class="r"><div class="price">$13</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">S</h2>
+<article class="it" data-id="PZ:salvavidas#0" data-src="PZ103" data-t="pz" data-p="3000" data-n="Salvavidas" data-l="La Nacional Jiu" data-k="salvavidas la nacional jiu"><div class="l"><div class="n">Salvavidas</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $20</span><span class="ct">Costo $178 / 9 pz</span></div></div><div class="r"><div class="price">$30</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:skittles#0" data-src="PZ104" data-t="pz" data-p="1500" data-n="Skittles" data-l="Candy Cami" data-k="skittles candy cami"><div class="l"><div class="n">Skittles</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $6.70</span><span class="ct">Costo $67.63 / 10 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:skwinkles-rellenos#0" data-src="PZ105" data-t="pz" data-p="1500" data-n="Skwinkles rellenos" data-l="" data-k="skwinkles rellenos"><div class="l"><div class="n">Skwinkles rellenos</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:smint#0" data-src="PZ106" data-t="pz" data-p="4300" data-n="Smint" data-l="La Nacional Jiu" data-k="smint la nacional jiu"><div class="l"><div class="n">Smint</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $32</span><span class="ct">Costo $384 / 12 pz</span></div></div><div class="r"><div class="price">$43</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:snickers#0" data-src="PZ107" data-t="pz" data-p="2300" data-n="Snickers" data-l="Candy Cami" data-k="snickers candy cami"><div class="l"><div class="n">Snickers</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"></div></div><div class="r"><div class="price">$23</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:swikinkles-salsaguetti#0" data-src="PZ108" data-t="pz" data-p="1500" data-n="Swikinkles salsaguetti" data-l="Candy Cami" data-k="swikinkles salsaguetti candy cami"><div class="l"><div class="n">Swikinkles salsaguetti</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $7.40</span><span class="ct">Costo $88.98 / 12 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:swikinkles-salsaguetti#1" data-src="PZ109" data-t="pz" data-p="1500" data-n="Swikinkles salsaguetti" data-l="La Nacional Jiu" data-k="swikinkles salsaguetti la nacional jiu"><div class="l"><div class="n">Swikinkles salsaguetti</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $7.50</span><span class="ct">Costo $91.04 / 12 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:swkinkles#0" data-src="PZ110" data-t="pz" data-p="1600" data-n="Swkinkles" data-l="Candy Cami" data-k="swkinkles candy cami"><div class="l"><div class="n">Swkinkles</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $9.60</span><span class="ct">Costo $76.95 / 8 pz</span></div></div><div class="r"><div class="price">$16</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">T</h2>
+<article class="it" data-id="PZ:tamarroca#0" data-src="PZ111" data-t="pz" data-p="500" data-n="Tamarroca" data-l="Candy Cami" data-k="tamarroca candy cami"><div class="l"><div class="n">Tamarroca</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2.23</span><span class="ct">Costo $89.36 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:tamborines#0" data-src="PZ112" data-t="pz" data-p="300" data-n="Tamborines" data-l="Candy Cami" data-k="tamborines candy cami"><div class="l"><div class="n">Tamborines</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $0.53</span><span class="ct">Costo $53.57 / 100 pz</span></div></div><div class="r"><div class="price">$3</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:tik-tak#0" data-src="PZ113" data-t="pz" data-p="1500" data-n="Tik tak" data-l="Candy Cami" data-k="tik tak candy cami"><div class="l"><div class="n">Tik tak</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $8.29</span><span class="ct">Costo $99.54 / 12 pz</span></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:trident-4s-chicles#0" data-src="PZ114" data-t="pz" data-p="500" data-n="Trident 4s chicles" data-l="Candy Cami" data-k="trident 4s chicles candy cami"><div class="l"><div class="n">Trident 4s chicles</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2</span><span class="ct">Costo $77.78 / 40 pz</span></div></div><div class="r"><div class="price">$5</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:tutsi-pop#0" data-src="PZ115" data-t="pz" data-p="700" data-n="Tutsi pop" data-l="Candy Cami" data-k="tutsi pop candy cami"><div class="l"><div class="n">Tutsi pop</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $3.48</span><span class="ct">Costo $348.70 / 100 pz</span></div></div><div class="r"><div class="price">$7</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">W</h2>
+<article class="it" data-id="PZ:winis#0" data-src="PZ116" data-t="pz" data-p="600" data-n="Winis" data-l="Candy Cami" data-k="winis candy cami"><div class="l"><div class="n">Winis</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo pz $2.50</span><span class="ct">Costo $62.53 / 24 pz</span></div></div><div class="r"><div class="price">$6</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">X</h2>
+<article class="it" data-id="PZ:xtreme-chupa-chups-frutas#0" data-src="PZ117" data-t="pz" data-p="2500" data-n="Xtreme chupa chups frutas" data-l="La Nacional Jiu" data-k="xtreme chupa chups frutas la nacional jiu"><div class="l"><div class="n">Xtreme chupa chups frutas</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $14.50</span><span class="ct">Costo $262 / 18 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:xtreme-chupa-chups-mora#0" data-src="PZ118" data-t="pz" data-p="2500" data-n="Xtreme chupa chups mora" data-l="La Nacional Jiu" data-k="xtreme chupa chups mora la nacional jiu"><div class="l"><div class="n">Xtreme chupa chups mora</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $15</span><span class="ct">Costo $267 / 18 pz</span></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PZ:xtubes-chupachups#0" data-src="PZ119" data-t="pz" data-p="2000" data-n="Xtubes Chupachups" data-l="La Nacional Jiu" data-k="xtubes chupachups la nacional jiu"><div class="l"><div class="n">Xtubes Chupachups</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo pz $14</span><span class="ct">Costo $128.93 / 9 pz</span></div></div><div class="r"><div class="price">$20</div><div class="u"></div></div></article>
+</div>
+</section>
+<section class="tab" id="gr">
+<div class="g"><h2 class="L">B</h2>
+<article class="it" data-id="GR:bomboncito-tapon#0" data-src="GR3" data-t="gr" data-p="3500" data-n="Bomboncito Tapón" data-l="Candy Cami" data-k="bomboncito tapon candy cami"><div class="l"><div class="n">Bomboncito Tapón</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $24</span><span class="ct">Costo $237 / 1k</span></div></div><div class="r"><div class="price">$35</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">C</h2>
+<article class="it" data-id="GR:cacahuate-ajo#0" data-src="GR4" data-t="gr" data-p="1500" data-n="Cacahuate ajo" data-l="Candy Cami" data-k="cacahuate ajo candy cami"><div class="l"><div class="n">Cacahuate ajo</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $6.50</span><span class="ct">Costo $64 / 1k</span></div></div><div class="r"><div class="price">$15</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:cacahuate-enchilado#0" data-src="GR5" data-t="gr" data-p="1500" data-n="Cacahuate enchilado" data-l="Candy Cami" data-k="cacahuate enchilado candy cami"><div class="l"><div class="n">Cacahuate enchilado</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $6.50</span><span class="ct">Costo $66 / 1k</span></div></div><div class="r"><div class="price">$15</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:cacahuate-garapinado#0" data-src="GR6" data-t="gr" data-p="1500" data-n="Cacahuate garapiñado" data-l="Candy Cami" data-k="cacahuate garapinado candy cami"><div class="l"><div class="n">Cacahuate garapiñado</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $5.50</span><span class="ct">Costo $55 / 1k</span></div></div><div class="r"><div class="price">$15</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:cacahuate-japones#0" data-src="GR7" data-t="gr" data-p="1500" data-n="Cacahuate japones" data-l="Candy Cami" data-k="cacahuate japones candy cami"><div class="l"><div class="n">Cacahuate japones</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $6</span><span class="ct">Costo $57 / 1k</span></div></div><div class="r"><div class="price">$15</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:cacahuate-salado#0" data-src="GR8" data-t="gr" data-p="1500" data-n="Cacahuate salado" data-l="Candy Cami" data-k="cacahuate salado candy cami"><div class="l"><div class="n">Cacahuate salado</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $6</span><span class="ct">Costo $62 / 1k</span></div></div><div class="r"><div class="price">$15</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:cherry#0" data-src="GR9" data-t="gr" data-p="1500" data-n="Cherry" data-l="" data-k="cherry"><div class="l"><div class="n">Cherry</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$15</div><div class="u">por 100 g</div></div></article>
+
+
+<article class="it" data-id="GR:chocoretas#0" data-src="GR12" data-t="gr" data-p="3000" data-n="Chocoretas" data-l="La Nacional Jiu" data-k="chocoretas la nacional jiu"><div class="l"><div class="n">Chocoretas</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $20</span><span class="ct">Costo $101.80 / 500</span></div></div><div class="r"><div class="price">$30</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:churritos-chipotle#0" data-src="GR13" data-t="gr" data-p="1300" data-n="Churritos chipotle" data-l="Viridiana" data-k="churritos chipotle viridiana"><div class="l"><div class="n">Churritos chipotle</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $68 / 1 k</span></div></div><div class="r"><div class="price">$13</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:churritos-enchilado#0" data-src="GR14" data-t="gr" data-p="1300" data-n="Churritos enchilado" data-l="Viridiana" data-k="churritos enchilado viridiana"><div class="l"><div class="n">Churritos enchilado</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $68 / 1 k</span></div></div><div class="r"><div class="price">$13</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:churritos-natural#0" data-src="GR15" data-t="gr" data-p="1300" data-n="Churritos natural" data-l="Viridiana" data-k="churritos natural viridiana"><div class="l"><div class="n">Churritos natural</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $64 / 1 k</span></div></div><div class="r"><div class="price">$13</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">D</h2>
+<article class="it" data-id="GR:dulce-mantequilla-cafe#0" data-src="GR16" data-t="gr" data-p="2700" data-n="Dulce mantequilla/café" data-l="La Nacional Jiu" data-k="dulce mantequilla/cafe la nacional jiu"><div class="l"><div class="n">Dulce mantequilla/café</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $21</span><span class="ct">Costo $73.78 / 350 g</span></div></div><div class="r"><div class="price">$27</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:dulce-mantequilla-cafe#1" data-src="GR17" data-t="gr" data-p="2700" data-n="Dulce mantequilla/café" data-l="La Nacional Jiu" data-k="dulce mantequilla/cafe la nacional jiu"><div class="l"><div class="n">Dulce mantequilla/café</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $19</span><span class="ct">Costo $93.56 / 500 g</span></div></div><div class="r"><div class="price">$27</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">G</h2>
+<article class="it" data-id="GR:goma-aros#0" data-src="GR18" data-t="gr" data-p="1700" data-n="Goma Aros" data-l="Candy Cami" data-k="goma aros candy cami"><div class="l"><div class="n">Goma Aros</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $82.11 / 1k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-banana#0" data-src="GR19" data-t="gr" data-p="1700" data-n="Goma banana" data-l="" data-k="goma banana"><div class="l"><div class="n">Goma banana</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-fruta-3d#0" data-src="GR20" data-t="gr" data-p="2000" data-n="Goma fruta 3D" data-l="" data-k="goma fruta 3d"><div class="l"><div class="n">Goma fruta 3D</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-frutas#0" data-src="GR21" data-t="gr" data-p="1700" data-n="Goma Frutas" data-l="Candy Cami" data-k="goma frutas candy cami"><div class="l"><div class="n">Goma Frutas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $70.96 / 1k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-frutifresa-2d#0" data-src="GR22" data-t="gr" data-p="1700" data-n="Goma Frutifresa 2D" data-l="" data-k="goma frutifresa 2d"><div class="l"><div class="n">Goma Frutifresa 2D</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-lombriz#0" data-src="GR23" data-t="gr" data-p="1700" data-n="Goma Lombriz" data-l="Candy Cami" data-k="goma lombriz candy cami"><div class="l"><div class="n">Goma Lombriz</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $79.28 / 1k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-lombriz-neon#0" data-src="GR24" data-t="gr" data-p="1700" data-n="Goma Lombriz Neon" data-l="Candy Cami" data-k="goma lombriz neon candy cami"><div class="l"><div class="n">Goma Lombriz Neon</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $70.28 / 1k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-panditas#0" data-src="GR25" data-t="gr" data-p="1700" data-n="Goma Panditas" data-l="Candy Cami" data-k="goma panditas candy cami"><div class="l"><div class="n">Goma Panditas</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $79.28 / 1k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:goma-pepino-enchilado#0" data-src="GR26" data-t="gr" data-p="1700" data-n="Goma pepino enchilado" data-l="" data-k="goma pepino enchilado"><div class="l"><div class="n">Goma pepino enchilado</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:gomas-frutas-enchiladas#0" data-src="GR27" data-t="gr" data-p="2000" data-n="Gomas Frutas enchiladas" data-l="La Nacional Jiu" data-k="gomas frutas enchiladas la nacional jiu"><div class="l"><div class="n">Gomas Frutas enchiladas</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $80.50 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:gomas-gotita#0" data-src="GR28" data-t="gr" data-p="1700" data-n="Gomas gotita" data-l="Viridiana" data-k="gomas gotita viridiana"><div class="l"><div class="n">Gomas gotita</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $74 / 1 k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:gomas-lombriz#0" data-src="GR29" data-t="gr" data-p="1700" data-n="Gomas lombriz" data-l="Viridiana" data-k="gomas lombriz viridiana"><div class="l"><div class="n">Gomas lombriz</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $82 / 1 k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:gomas-pinguilokos#0" data-src="GR30" data-t="gr" data-p="1700" data-n="Gomas Pinguilokos" data-l="La Nacional Jiu" data-k="gomas pinguilokos la nacional jiu"><div class="l"><div class="n">Gomas Pinguilokos</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $78.20 / 1k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:gomas-tiburones#0" data-src="GR31" data-t="gr" data-p="1700" data-n="Gomas tiburones" data-l="Viridiana" data-k="gomas tiburones viridiana"><div class="l"><div class="n">Gomas tiburones</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $84 / 1 k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">H</h2>
+<article class="it" data-id="GR:habas#0" data-src="GR32" data-t="gr" data-p="1700" data-n="Habas" data-l="" data-k="habas"><div class="l"><div class="n">Habas</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:huevitos#0" data-src="GR33" data-t="gr" data-p="2000" data-n="Huevitos" data-l="Candy Cami" data-k="huevitos candy cami"><div class="l"><div class="n">Huevitos</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $11</span><span class="ct">Costo $107.89 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">K</h2>
+<article class="it" data-id="GR:kranky#0" data-src="GR34" data-t="gr" data-p="3000" data-n="Kranky" data-l="La Nacional Jiu" data-k="kranky la nacional jiu"><div class="l"><div class="n">Kranky</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $20</span><span class="ct">Costo $99 / 500</span></div></div><div class="r"><div class="price">$30</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">L</h2>
+<article class="it" data-id="GR:lombrices-tajin#0" data-src="GR35" data-t="gr" data-p="2000" data-n="Lombrices Tajin" data-l="Candy Cami" data-k="lombrices tajin candy cami"><div class="l"><div class="n">Lombrices Tajin</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $70 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:lombrices-tajin#1" data-src="GR36" data-t="gr" data-p="2000" data-n="Lombrices Tajin" data-l="Candy Cami" data-k="lombrices tajin candy cami"><div class="l"><div class="n">Lombrices Tajin</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $8</span><span class="ct">Costo $77.23 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:lunetas-yogurth#0" data-src="GR37" data-t="gr" data-p="1800" data-n="Lunetas Yogurth" data-l="Candy Cami" data-k="lunetas yogurth candy cami"><div class="l"><div class="n">Lunetas Yogurth</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $11.50</span><span class="ct">Costo $57.86 / 500 g</span></div></div><div class="r"><div class="price">$18</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">M</h2>
+<article class="it" data-id="GR:mangos-deshidratado-enchilado#0" data-src="GR38" data-t="gr" data-p="3000" data-n="Mangos deshidratado enchilado" data-l="" data-k="mangos deshidratado enchilado"><div class="l"><div class="n">Mangos deshidratado enchilado</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$30</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:manguito-enchilado#0" data-src="GR39" data-t="gr" data-p="2000" data-n="Manguito Enchilado" data-l="Candy Cami" data-k="manguito enchilado candy cami"><div class="l"><div class="n">Manguito Enchilado</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $69.41 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:manguito-enchilado#1" data-src="GR40" data-t="gr" data-p="2000" data-n="Manguito enchilado" data-l="Viridiana" data-k="manguito enchilado viridiana"><div class="l"><div class="n">Manguito enchilado</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $73 / 1 k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:manguito-tajin#0" data-src="GR41" data-t="gr" data-p="2000" data-n="Manguito Tajin" data-l="La Nacional Jiu" data-k="manguito tajin la nacional jiu"><div class="l"><div class="n">Manguito Tajin</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $8.50</span><span class="ct">Costo $85.01 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:manguitos-tajin#0" data-src="GR42" data-t="gr" data-p="2000" data-n="Manguitos Tajin" data-l="Candy Cami" data-k="manguitos tajin candy cami"><div class="l"><div class="n">Manguitos Tajin</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $7</span><span class="ct">Costo $69.41 / 1k</span></div></div><div class="r"><div class="price">$20</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">P</h2>
+<article class="it" data-id="GR:pasas-chocolate#0" data-src="GR45" data-t="gr" data-p="3500" data-n="Pasas chocolate" data-l="Candy Cami" data-k="pasas chocolate candy cami"><div class="l"><div class="n">Pasas chocolate</div><div class="m"><span class="chip">Candy Cami</span></div><div class="cost"><span class="cu">Costo 100 g $25</span><span class="ct">Costo $252 / 1k</span></div></div><div class="r"><div class="price">$35</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:pasas-chocolate#1" data-src="GR46" data-t="gr" data-p="3500" data-n="Pasas chocolate" data-l="La Nacional Jiu" data-k="pasas chocolate la nacional jiu"><div class="l"><div class="n">Pasas chocolate</div><div class="m"><span class="chip">La Nacional Jiu</span></div><div class="cost"><span class="cu">Costo 100 g $18</span><span class="ct">Costo $99 / 500</span></div></div><div class="r"><div class="price">$35</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:platanitos#0" data-src="GR47" data-t="gr" data-p="1800" data-n="Platanitos" data-l="Viridiana" data-k="platanitos viridiana"><div class="l"><div class="n">Platanitos</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $12</span><span class="ct">Costo $120 / 1 k</span></div></div><div class="r"><div class="price">$18</div><div class="u">por 100 g</div></div></article>
+<article class="it" data-id="GR:pretzel-chocolate#0" data-src="GR48" data-t="gr" data-p="3300" data-n="Pretzel chocolate" data-l="Merced" data-k="pretzel chocolate merced"><div class="l"><div class="n">Pretzel chocolate</div><div class="m"><span class="chip">Merced</span></div><div class="cost"><span class="cu">Costo 100 g $18</span><span class="ct">Costo $185 / 1k</span></div></div><div class="r"><div class="price">$33</div><div class="u">por 100 g</div></div></article>
+</div>
+<div class="g"><h2 class="L">S</h2>
+<article class="it" data-id="GR:suspiro#0" data-src="GR49" data-t="gr" data-p="1700" data-n="Suspiro" data-l="Viridiana" data-k="suspiro viridiana"><div class="l"><div class="n">Suspiro</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="cu">Costo 100 g $9</span><span class="ct">Costo $90 / 1 k</span></div></div><div class="r"><div class="price">$17</div><div class="u">por 100 g</div></div></article>
+</div>
+</section>
+<section class="tab" id="pa">
+<div class="g"><h2 class="L">Bolsa pequeña</h2>
+<article class="it" data-id="PA:palomitas-bolsa-pequena-sabores-caramelo#0" data-src="PA11" data-t="pz" data-p="2000" data-n="Palomitas bolsa pequeña · sabores caramelo" data-l="" data-k="palomitas bolsa pequena sabores caramelo"><div class="l"><div class="n">Sabores caramelo</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$20</div><div class="u"></div></div></article></div>
+<div class="g"><h2 class="L">Caja palomera</h2>
+<article class="it" data-id="PA:palomitas-caja-palomera-mantequilla#0" data-src="PA1" data-t="pz" data-p="1500" data-n="Palomitas caja palomera · mantequilla" data-l="" data-k="palomitas caja palomera mantequilla"><div class="l"><div class="n">Mantequilla</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$15</div><div class="u"></div></div></article>
+<article class="it" data-id="PA:palomitas-caja-palomera-caramelo#0" data-src="PA2" data-t="pz" data-p="2500" data-n="Palomitas caja palomera · caramelo" data-l="" data-k="palomitas caja palomera caramelo"><div class="l"><div class="n">Caramelo</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">Bolsa chica</h2>
+<article class="it" data-id="PA:palomitas-bolsa-chica-mantequilla#0" data-src="PA10" data-t="pz" data-p="2500" data-n="Palomitas bolsa chica · mantequilla" data-l="" data-k="palomitas bolsa chica mantequilla"><div class="l"><div class="n">Mantequilla</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$25</div><div class="u"></div></div></article>
+<article class="it" data-id="PA:palomitas-bolsa-chica-caramelo#0" data-src="PA4" data-t="pz" data-p="4500" data-n="Palomitas bolsa chica · caramelo" data-l="" data-k="palomitas bolsa chica caramelo"><div class="l"><div class="n">Caramelo</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$45</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">Bolsa grande</h2>
+<article class="it" data-id="PA:palomitas-bolsa-grande-mantequilla#0" data-src="PA5" data-t="pz" data-p="5500" data-n="Palomitas bolsa grande · mantequilla" data-l="" data-k="palomitas bolsa grande mantequilla"><div class="l"><div class="n">Mantequilla</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$55</div><div class="u"></div></div></article>
+<article class="it" data-id="PA:palomitas-bolsa-grande-caramelo#0" data-src="PA7" data-t="pz" data-p="9500" data-n="Palomitas bolsa grande · caramelo" data-l="" data-k="palomitas bolsa grande caramelo"><div class="l"><div class="n">Caramelo</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$95</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">Bolsa 1 kilo</h2>
+<article class="it" data-id="PA:palomitas-bolsa-1-kilo-mantequilla#0" data-src="PA8" data-t="pz" data-p="9500" data-n="Palomitas bolsa 1 kilo · mantequilla" data-l="" data-k="palomitas bolsa 1 kilo mantequilla"><div class="l"><div class="n">Mantequilla</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">$95</div><div class="u"></div></div></article>
+</div>
+<div class="g"><h2 class="L">Papas</h2>
+<article class="it" data-id="GR:papa-natural#0" data-src="GR44" data-t="pz" data-p="2500" data-n="Papa natural" data-l="Cuautla" data-k="papa natural cuautla" data-w=1><div class="l"><div class="n">Papa natural</div><div class="m"><span class="chip">Cuautla</span></div><div class="cost"><span class="ct">Costo $850 / 5 k</span></div></div><div class="r"><div class="price">$25</div><div class="u">por bolsa</div></div></article>
+<article class="it" data-id="GR:papa-natural#1" data-src="GR43" data-t="pz" data-p="2500" data-n="Papa natural" data-l="Viridiana" data-k="papa natural viridiana" data-w=1><div class="l"><div class="n">Papa natural</div><div class="m"><span class="chip">Viridiana</span></div><div class="cost"><span class="ct">Costo $180 / 1 k</span></div></div><div class="r"><div class="price">$25</div><div class="u">por bolsa</div></div></article>
+</div>
+</section>
+<section class="tab" id="vt">
+<h2 class="L" id="vh" style="margin-top:14px">Ventas del día</h2>
+<input class="fld" id="who" placeholder="Nombre de quien vende" style="margin-bottom:8px"><input class="fld" type="date" id="vd">
+<div class="tot"><span id="vn"></span><span id="vtot"></span></div>
+<button class="btn" id="xl">Generar Excel de este día</button><div class="gap"></div><button class="btn s" id="pr">Imprimir resumen del día</button>
+<div id="vl"></div>
+</section>
+<section class="tab" id="st"><h2 class="L" style="margin-top:14px">📈 Lo más vendido</h2>
+<div class="chips" id="stp"><button data-p="1">Hoy</button><button data-p="7" class="on">7 días</button><button data-p="30">30 días</button><button data-p="0">Todo</button></div>
+<div class="chips" id="stg" style="margin-top:0"><button data-g="all" class="on">Todo</button><button data-g="dul">Dulces</button><button data-g="pal">Palomitas</button></div>
+<div id="stb"></div></section>
+<div id="none" class="hide">No hay resultados</div>
+</main>
+<div id="bar" class="hide"><button class="btn" id="barb"></button></div>
+<input type="file" id="sf" accept=".json,application/json" class="hide">
+<div id="toast" class="hide"></div>
+<script>(function(){
+var ROLE='vendedor';
+//PURE-START
+function fmt(c){var n=c/100;return '$'+(c%100?n.toLocaleString('es-MX',{minimumFractionDigits:2,maximumFractionDigits:2}):n.toLocaleString('es-MX'));}
+function lineTotal(l){return l.t==='gr'?Math.round(l.p*l.g/100):l.p*l.q;}
+function cartTotal(c){return c.reduce(function(s,l){return s+lineTotal(l);},0);}
+function pad(n){return (n<10?'0':'')+n;}
+function dayOf(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+//PURE-END
+var $=function(i){return document.getElementById(i);},m=$('m'),q=$('q'),cart=[],events=[],pending=[],sales=[],inv={},cust={},custSig='',cfg=null,me=null,profs=[],mode='login';
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function norm(t){return t.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();}
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var tt;function toast(t){var e=$('toast');e.textContent=t;e.classList.remove('hide');clearTimeout(tt);tt=setTimeout(function(){e.classList.add('hide');},2800);}
+function same(a,b){return (a||'').toLowerCase()===(b||'').toLowerCase();}
+function tot(r){return r.lines.reduce(function(s,x){return s+x.q;},0);}
+function fmtS(t,n){return t==='gr'?(n>=1000?(Math.round(n)/1000)+' kg':n+' g'):n+' pz';}
+function who(){return ROLE==='jefe'?(me||''):(lsGet('ap_who','')||'');}
+cart=lsGet('ap_cart',[]);events=lsGet('ap_ev',[]);pending=lsGet('ap_pend',[]);cfg=lsGet('ap_sync',null);profs=lsGet('ap_profiles',[]);
+/* ================= REGISTRO DE MOVIMIENTOS ================= */
+//LEDGER-START
+function applyItems(items,sg){items.forEach(function(l){var r=l.id&&inv[l.id];if(!r)return;var n=l.t==='gr'?l.g:l.q,f=r.lines.filter(function(x){return same(x.s,l.sab);})[0];if(f)f.q+=sg*n;else if(sg>0)r.lines.push({s:l.sab||'',q:n});});}
+function rebuild(){
+  events.sort(function(a,b){return a.id<b.id?-1:a.id>b.id?1:0;});
+  inv={};sales=[];cust={};var sm={},vd={};
+  events.forEach(function(e){
+    if(e.t==='in'||e.t==='set'){var r=inv[e.p]||(inv[e.p]={lines:[]}),f=r.lines.filter(function(x){return same(x.s,e.s);})[0];
+      if(e.t==='in'){if(f)f.q+=e.q;else r.lines.push({s:e.s||'',q:e.q});}else{if(f)f.q=e.q;else r.lines.push({s:e.s||'',q:e.q});}}
+    else if(e.t==='del'){var r2=inv[e.p];if(r2)r2.lines=r2.lines.filter(function(x){return !same(x.s,e.s);});}
+    else if(e.t==='untrack'){delete inv[e.p];}
+    else if(e.t==='newpal'){cust[e.pid]={id:e.pid,name:e.name,cat:'pal',size:e.size,p:e.p,order:e.id};}
+    else if(e.t==='newprod'){cust[e.pid]={id:e.pid,name:e.name,cat:e.cat,size:e.size,p:e.p,order:e.id};}
+    else if(e.t==='palp'){if(cust[e.pid])cust[e.pid].p=e.p;}
+    else if(e.t==='paldel'){if(cust[e.pid])cust[e.pid].del=true;}
+    else if(e.t==='sale'){sm[e.id]=e;sales.push(e);applyItems(e.items,-1);}
+    else if(e.t==='void'){if(sm[e.sid]&&!vd[e.sid]){vd[e.sid]=1;applyItems(sm[e.sid].items,1);}}
+  });
+  sales=sales.filter(function(s){return !vd[s.id];});
+}
+function stockLine(id,sab){var r=inv[id];if(!r)return null;var t=0;r.lines.forEach(function(x){if(same(x.s,sab))t+=x.q;});return t;}
+//LEDGER-END
+//SYNC-START
+var busy=false,syncErr='',lastOk=0;
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function persistEv(){lsSet('ap_ev',events);lsSet('ap_pend',pending);}
+function baseUrl(){return cfg&&cfg.base?cfg.base.replace(/\/+$/,''):null;}
+function emit(ev){ev.id=uid();ev.ts=Date.now();ev.by=who();events.push(ev);pending.push(ev.id);persistEv();rebuild();refresh();flush();return ev;}
+async function flush(){var b=baseUrl();if(!b||busy||!pending.length){stat();return;}busy=true;
+  try{for(var i=0;i<pending.length;){var id=pending[i],ev=events.filter(function(e){return e.id===id;})[0];
+      if(!ev){pending.splice(i,1);continue;}
+      var r=await fetch(b+'/ledger/'+id+'.json',{method:'PUT',body:JSON.stringify(ev)});if(!r.ok)throw new Error('http '+r.status);
+      pending.splice(i,1);persistEv();}
+    syncErr='';}catch(e){syncErr='Sin conexión';}
+  busy=false;stat();}
+async function pull(full){var b=baseUrl();if(!b)return;
+  try{var url=b+'/ledger.json';
+    if(!full&&events.length){var lt=events.reduce(function(a,e){return Math.max(a,e.ts||0);},0);url+='?orderBy=%22%24key%22&startAt=%22'+Math.max(0,lt-600000).toString(36)+'%22';}
+    var r=await fetch(url);if(!r.ok)throw new Error('http '+r.status);var o=(await r.json())||{},have={},n=0;
+    events.forEach(function(e){have[e.id]=1;});
+    Object.keys(o).forEach(function(k){var e=o[k];if(e&&e.t&&!have[k]){e.id=k;events.push(e);n++;}});
+    syncErr='';lastOk=Date.now();if(n){persistEv();rebuild();refresh();}}catch(e){syncErr='Sin conexión';}
+  stat();}
+//SYNC-END
+function stat(){var e=$('sy');if(!e)return;e.textContent=!baseUrl()?'☁ Conectar':syncErr?'☁ Sin conexión':pending.length?'☁ '+pending.length+' por enviar':'☁ Sincronizado';}
+function refresh(){paintStock();stat();var on=document.querySelector('.tab.on');if(!on)return;
+  if(on.id==='vt')renderSales();
+  else if(on.id==='st')renderStats();
+  else if(on.id==='iv'&&!(document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#il')))renderInv();}
+function tick(){if(document.hidden||!baseUrl())return;flush().then(function(){return pull();});}
+setInterval(tick,8000);document.addEventListener('visibilitychange',tick);
+/* ================= PRODUCTOS ================= */
+function run(){
+  var sec=document.querySelector('.tab.on');if(sec.id==='vt'||sec.id==='iv'||sec.id==='st'){return;}
+  var t=norm(q.value),w=$('w').checked,tot2=0;
+  sec.querySelectorAll('.g').forEach(function(g){var any=0;
+    g.querySelectorAll('.it').forEach(function(it){var ok=(!t||it.dataset.k.indexOf(t)>-1)&&(!w||it.dataset.w);it.classList.toggle('hide',!ok);if(ok)any++;});
+    g.classList.toggle('hide',!any);tot2+=any;});
+  $('none').classList.toggle('hide',tot2>0);$('cnt').textContent=tot2+' productos';
+}
+q.addEventListener('input',run);$('w').addEventListener('change',run);
+$('c').addEventListener('change',function(e){m.classList.toggle('nocost',!e.target.checked);});
+document.querySelectorAll('.tabs button').forEach(function(b){b.addEventListener('click',function(){
+  document.querySelectorAll('.tabs button,.tab').forEach(function(x){x.classList.remove('on');});
+  b.classList.add('on');$(b.dataset.t).classList.add('on');var oth=b.dataset.t==='vt'||b.dataset.t==='iv'||b.dataset.t==='st';document.body.classList.toggle('vt',oth);if(oth)$('none').classList.add('hide');b.scrollIntoView({inline:'center',block:'nearest'});
+  window.scrollTo(0,0);if(b.dataset.t==='vt'){$('cnt').textContent='';renderSales();}else if(b.dataset.t==='iv'){$('cnt').textContent='';renderInv();}else if(b.dataset.t==='st'){$('cnt').textContent='';renderStats();}else run();});});
+//CUST-START
+function letterOf(n){var L=norm(n).charAt(0).toUpperCase();return /[A-Z]/.test(L)?L:'#';}
+function paintCustom(){var list=Object.keys(cust).map(function(k){return cust[k];}).filter(function(c){return !c.del;}).sort(function(a,b){return a.order<b.order?-1:1;}),sig=JSON.stringify(list);
+  if(sig===custSig)return;custSig=sig;
+  document.querySelectorAll('[data-cu]').forEach(function(x){x.remove();});
+  document.querySelectorAll('[data-cg]').forEach(function(g){if(!g.querySelector('.it'))g.remove();});
+  list.forEach(function(c){var cat=c.cat||'pal',tab=$(cat==='pal'?'pa':cat==='gr'?'gr':'pz'),full=cat==='pal'?'Palomitas '+c.size.toLowerCase()+' · '+c.name:c.name,grp=null,i,gs;
+    if(cat==='pal'){gs=tab.querySelectorAll('.g');for(i=0;i<gs.length;i++){var h2=gs[i].querySelector('h2');if(h2&&h2.textContent===c.size)grp=gs[i];}if(!grp)return;}
+    else{var L=letterOf(c.name),before=null;gs=tab.querySelectorAll('.g');
+      for(i=0;i<gs.length;i++){var t=gs[i].querySelector('h2').textContent;if(t===L){grp=gs[i];break;}if(t>L&&!before)before=gs[i];}
+      if(!grp){grp=document.createElement('div');grp.className='g';grp.setAttribute('data-cg','1');grp.innerHTML='<h2 class="L">'+L+'</h2>';tab.insertBefore(grp,before);}}
+    var a=document.createElement('article');a.className='it';a.setAttribute('data-cu','1');
+    a.dataset.id=c.id;a.dataset.src=c.id;a.dataset.t=cat==='gr'?'gr':'pz';a.dataset.p=c.p;a.dataset.n=full;a.dataset.l='';a.dataset.k=norm(full);
+    a.innerHTML='<div class="l"><div class="n">'+esc(c.name)+'</div><div class="m"></div><div class="cost"></div></div><div class="r"><div class="price">'+fmt(c.p)+'</div><div class="u">'+(cat==='gr'?'por 100 g':'')+'</div></div>';
+    if(cat==='pal'){grp.appendChild(a);}
+    else{var its=grp.querySelectorAll('.it'),ins=null;for(var j=0;j<its.length;j++){if(norm(its[j].dataset.n)>norm(full)){ins=its[j];break;}}grp.insertBefore(a,ins);}
+  });}
+//CUST-END
+function paintCounts(){[['pz','Pieza'],['gr','Granel']].forEach(function(x){var b=document.querySelector('.tabs [data-t="'+x[0]+'"]');if(b)b.textContent=x[1]+' ('+$(x[0]).querySelectorAll('.it').length+')';});}
+function paintStock(){paintCustom();paintCounts();document.querySelectorAll('.tab .it').forEach(function(it){var r=inv[it.dataset.id],e=it.querySelector('.stk');
+  if(!e){e=document.createElement('div');e.className='stk';it.querySelector('.r').appendChild(e);}
+  if(!r){e.textContent='';it.classList.remove('out');return;}var t=tot(r);e.textContent=t>0?'Quedan '+fmtS(it.dataset.t==='gr'?'gr':'pz',t):'Agotado';it.classList.toggle('out',t<=0);});}
+/* ================= CARRITO ================= */
+function okStock(l,amt){if(!l.id)return true;var s=stockLine(l.id,l.sab);if(s===null)return true;var o=0;cart.forEach(function(x){if(x!==l&&x.id===l.id&&same(x.sab,l.sab))o+=x.t==='gr'?x.g:x.q;});return amt+o<=s;}
+function persist(){lsSet('ap_cart',cart);renderBar();}
+function renderBar(){var n=cart.length;$('bar').classList.toggle('hide',!n);$('barb').textContent=n?'🛒 Ver carrito ('+n+') · '+fmt(cartTotal(cart)):'';}
+function add0(l){
+  if(l.t==='gr'||(l.t==='pz'&&!l.man)){var f=cart.filter(function(x){return x.src===l.src&&x.t===l.t&&!x.man&&(x.sab||'')===(l.sab||'');})[0];
+    if(f){if(l.t==='gr')f.g+=l.g;else f.q+=l.q;persist();toast('Agregado: '+l.name);return;}}
+  cart.push(l);persist();toast('Agregado: '+l.name);
+}
+function add(l){if(!okStock(l,l.t==='gr'?l.g:l.q)){toast('No alcanza el inventario de '+l.name);return false;}add0(l);return true;}
+function prod(id){var a=document.querySelectorAll('.tab .it');for(var i=0;i<a.length;i++)if(a[i].dataset.id===id)return a[i].dataset;}
+function pick(d){var r=inv[d.id];
+  if(d.f){if(!r||tot(r)<=0){toast('No hay sabores en inventario');return;}flav(d,r);return;}
+  if(r&&tot(r)<=0){toast('Agotado: '+d.n);return;}
+  if(d.t==='pz')add({id:d.id,src:d.src,name:d.n,lugar:d.l,t:'pz',p:+d.p,q:1});else dlg(d);}
+m.addEventListener('click',function(e){var it=e.target.closest('.it');if(!it)return;pick(it.dataset);});
+function flav(d,r){var o=document.createElement('div');o.className='ov';
+  o.innerHTML='<div class="sheet"><h3>'+esc(d.n)+'</h3><p style="margin:0 0 8px;color:var(--mute)">¿Qué sabor?</p><div class="chips">'+r.lines.filter(function(x){return x.q>0;}).map(function(x){return '<button data-s="'+esc(x.s)+'">'+esc(x.s||'Normal')+' ('+x.q+')</button>';}).join('')+'</div><button class="btn s" id="fc">Cancelar</button></div>';
+  document.body.appendChild(o);
+  o.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){add({id:d.id,sab:b.dataset.s,src:d.src,name:d.n+(b.dataset.s?' ('+b.dataset.s+')':''),lugar:d.l,t:'pz',p:+d.p,q:1});o.remove();};});
+  o.querySelector('#fc').onclick=function(){o.remove();};o.addEventListener('click',function(e){if(e.target===o)o.remove();});}
+function dlg(d){
+  var man=d.t==='man',p=+d.p,h='<h3>'+esc(d.n)+'</h3>';
+  if(man){h+='<p style="margin:0 0 8px;color:var(--mute)">Escribe el precio.</p><input class="fld" id="dv" type="number" inputmode="decimal" min="0" step="0.5" placeholder="Precio en pesos">';}
+  else{h+='<p style="margin:0 0 4px;color:var(--mute)">Precio por 100 g: <b>'+fmt(p)+'</b></p><div class="chips">'+[50,100,150,200,250,500].map(function(g){return '<button data-g="'+g+'">'+g+' g</button>';}).join('')+'</div><input class="fld" id="dv" type="number" inputmode="numeric" min="1" step="1" placeholder="Gramos (ej. 200)"><div class="tot"><span>Total</span><span id="dt">$0</span></div>';}
+  h+='<div class="gap"></div><button class="btn" id="da">Agregar al carrito</button><div class="gap"></div><button class="btn s" id="dc">Cancelar</button>';
+  var o=document.createElement('div');o.className='ov';o.innerHTML='<div class="sheet">'+h+'</div>';document.body.appendChild(o);
+  var dv=o.querySelector('#dv');function upd(){if(!man)o.querySelector('#dt').textContent=fmt(Math.round(p*(+dv.value||0)/100));}
+  dv.addEventListener('input',upd);dv.focus();
+  o.querySelectorAll('[data-g]').forEach(function(b){b.addEventListener('click',function(){dv.value=b.dataset.g;upd();});});
+  function close(){o.remove();}
+  o.querySelector('#dc').onclick=close;o.addEventListener('click',function(e){if(e.target===o)close();});
+  o.querySelector('#da').onclick=function(){var v=+dv.value;
+    if(!(v>0)){toast(man?'Escribe un precio':'Escribe los gramos');return;}
+    if(man){add({id:d.id,src:d.src,name:d.n,lugar:d.l,t:'pz',p:Math.round(v*100),q:1,man:1});}
+    else{if(v!==Math.floor(v)){toast('Pon gramos enteros');return;}if(!add({id:d.id,src:d.src,name:d.n,lugar:d.l,t:'gr',p:p,g:v}))return;}
+    close();};
+}
+$('barb').onclick=openCart;
+function openCart(){
+  var o=document.createElement('div');o.className='ov';document.body.appendChild(o);
+  function draw(){
+    if(!cart.length){o.remove();return;}
+    o.innerHTML='<div class="sheet"><h3>Carrito</h3>'+cart.map(function(l,i){
+      return '<div class="row"><div class="nm"><b>'+esc(l.name)+'</b><small>'+(l.t==='gr'?fmt(l.p)+' por 100 g':fmt(l.p)+' c/u'+(l.man?' (precio manual)':''))+'</small></div>'+
+      '<div class="st"><button data-i="'+i+'" data-a="-">−</button>'+(l.t==='gr'?'<input type="number" inputmode="numeric" data-i="'+i+'" data-a="g" value="'+l.g+'"><small>g</small>':'<b style="min-width:22px;text-align:center">'+l.q+'</b>')+'<button data-i="'+i+'" data-a="+">+</button></div>'+
+      '<div class="lt">'+fmt(lineTotal(l))+'</div><button class="x" data-i="'+i+'" data-a="x">✕</button></div>';}).join('')+
+      '<div class="tot"><span>Total</span><span>'+fmt(cartTotal(cart))+'</span></div><button class="btn" id="sold">Ya vendido ✓</button><div class="gap"></div><button class="btn s" id="cl">Seguir agregando</button><div class="gap"></div><button class="btn s" id="em">Vaciar carrito</button></div>';
+    o.querySelector('#cl').onclick=function(){o.remove();};
+    o.querySelector('#em').onclick=function(){cart=[];persist();o.remove();};
+    o.querySelector('#sold').onclick=function(){sell();o.remove();};
+    o.querySelectorAll('[data-a]').forEach(function(e){
+      if(e.dataset.a==='g'){e.addEventListener('change',function(){var v=Math.floor(+e.value);if(v>0){if(okStock(cart[+e.dataset.i],v))cart[+e.dataset.i].g=v;else toast('No alcanza el inventario');}persist();draw();});return;}
+      e.addEventListener('click',function(){var l=cart[+e.dataset.i],a=e.dataset.a;
+        if(a==='x')cart.splice(+e.dataset.i,1);
+        else if(l.t==='gr'){var ng=Math.max(0,l.g+(a==='+'?50:-50));if(a==='+'&&!okStock(l,ng)){toast('No alcanza el inventario');return;}l.g=ng;if(!l.g)cart.splice(+e.dataset.i,1);}
+        else{var nq=l.q+(a==='+'?1:-1);if(a==='+'&&!okStock(l,nq)){toast('No alcanza el inventario');return;}l.q=nq;if(l.q<1)cart.splice(+e.dataset.i,1);}
+        persist();draw();});});
+  }
+  o.addEventListener('click',function(e){if(e.target===o)o.remove();});draw();
+}
+/* ================= VENTAS ================= */
+function sell(){
+  if(!cart.length)return;var d=new Date(),amt=cartTotal(cart);
+  emit({t:'sale',at:dayOf(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes())+':'+pad(d.getSeconds()),day:dayOf(d),total:amt,
+    items:cart.map(function(l){var r={id:l.id||'',sab:l.sab||'',src:l.src,name:l.name,lugar:l.lugar||'',t:l.t,p:l.p};if(l.t==='gr')r.g=l.g;else r.q=l.q;if(l.man)r.man=1;return r;})});
+  cart=[];persist();toast('Venta guardada: '+fmt(amt));
+}
+function daySales(day){return sales.filter(function(s){return s.day===day;}).sort(function(a,b){return a.at<b.at?-1:1;});}
+function renderSales(){
+  var day=$('vd').value||dayOf(new Date()),ds=daySales(day).reverse();
+  $('vh').textContent='Ventas del '+day;
+  $('vtot').textContent=fmt(ds.reduce(function(t,s){return t+s.total;},0));$('vn').textContent=ds.length+(ds.length===1?' venta':' ventas');
+  $('vl').innerHTML=ds.length?ds.map(function(s){return '<div class="sale"><div class="h"><span>'+s.at.slice(11,16)+(s.by?' · <small>'+esc(s.by)+'</small>':'')+'</span><span>'+fmt(s.total)+'</span></div><small>'+
+    s.items.map(function(l){return esc(l.name)+' ('+(l.t==='gr'?l.g+' g':'×'+l.q)+') '+fmt(lineTotal(l));}).join(' · ')+'</small><div style="text-align:right"><button class="x" data-del="'+s.id+'" style="font-size:13px">Borrar venta</button></div></div>';}).join(''):'<p style="color:var(--mute);text-align:center;padding:24px 0">Sin ventas este día</p>';
+}
+$('vd').value=dayOf(new Date());$('vd').addEventListener('change',renderSales);
+if($('who')){$('who').value=lsGet('ap_who','');$('who').addEventListener('input',function(){lsSet('ap_who',$('who').value.trim());});}
+var armed=null;
+$('vl').addEventListener('click',function(e){var b=e.target.closest('[data-del]');if(!b)return;
+  if(armed!==b.dataset.del){armed=b.dataset.del;b.textContent='¿Seguro? Toca otra vez';setTimeout(function(){armed=null;},3000);return;}
+  armed=null;emit({t:'void',sid:b.dataset.del});});
+$('pr').onclick=function(){window.print();};
+function saveFile(name,data,mime){
+  try{var b=new Blob([data],{type:mime}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();
+    setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},4000);toast('Descargando '+name);}catch(e){toast('No se pudo descargar el archivo');}
+}
+$('xl').onclick=function(){
+  var day=$('vd').value,ds=daySales(day);
+  if(!ds.length){toast('No hay ventas ese día');return;}
+  var rows=[['Fecha','Hora','Venta #','Producto','Lugar','Tipo','Cantidad (pz)','Gramos','Precio unitario (pz o por 100 g)','Total','Vendedor']];
+  ds.forEach(function(s,i){s.items.forEach(function(l){rows.push([day,s.at.slice(11,16),i+1,l.name,l.lugar||'',l.t==='gr'?'Granel':(l.man?'Precio manual':'Pieza'),l.t==='gr'?'':l.q,l.t==='gr'?l.g:'',l.p/100,lineTotal(l)/100,s.by||'']);});});
+  if(!window.XLSX){var csv='\ufeff'+rows.map(function(r){return r.map(function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(',');}).join('\r\n');saveFile('Ventas_AP_'+day+'.csv',csv,'text/csv');return;}
+  var n=rows.length;rows.push([]);rows.push(['','','','','','','','','TOTAL DEL DÍA',0]);
+  var ws=XLSX.utils.aoa_to_sheet(rows),sum=ds.reduce(function(t,s){return t+s.total;},0)/100;
+  ws['J'+(n+2)]={t:'n',f:'SUM(J2:J'+n+')',v:sum};
+  for(var r=2;r<=n+2;r++){['I','J'].forEach(function(c){if(ws[c+r]&&ws[c+r].t==='n')ws[c+r].z='"$"#,##0.00';});}
+  ws['!cols']=[{wch:11},{wch:7},{wch:8},{wch:28},{wch:16},{wch:13},{wch:13},{wch:8},{wch:18},{wch:12},{wch:14}];
+  var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Ventas '+day);
+  saveFile('Ventas_AP_'+day+'.xlsx',XLSX.write(wb,{bookType:'xlsx',type:'array'}),'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+};
+/* ================= LO MÁS VENDIDO ================= */
+var stP=7,stG='all';
+//STATS-START
+function grpOf(l){return ((l.id||'').slice(0,2)==='PA'||/^papa natural/i.test(l.name||''))?'pal':'dul';}
+function stRange(n){var e=new Date(),s=new Date();s.setDate(s.getDate()-(n-1));return [dayOf(s),dayOf(e)];}
+function stAgg(from,to,g){var map={},T=0,N=0;
+  sales.forEach(function(s){if(s.day<from||s.day>to)return;var any=false;
+    s.items.forEach(function(l){var gp=grpOf(l);if(g!=='all'&&gp!==g)return;any=true;var k=(l.id||l.name)+'|'+(l.sab||''),v=lineTotal(l),a=map[k]||(map[k]={name:l.name,gr:gp,t:l.t,qty:0,money:0});
+      a.money+=v;a.qty+=l.t==='gr'?l.g:l.q;T+=v;});
+    if(any)N++;});
+  return {map:map,T:T,N:N};}
+//STATS-END
+function renderStats(){
+  var n=stP,rg=n>0?stRange(n):['0000','9999'],cur=stAgg(rg[0],rg[1],stG),all=stAgg(rg[0],rg[1],'all'),prev=null;
+  if(!cur.T){$('stb').innerHTML='<p style="color:var(--mute);text-align:center;padding:30px 0">Aún no hay ventas en este periodo</p>';return;}
+  if(n>0){var a=new Date(),b=new Date();a.setDate(a.getDate()-(2*n-1));b.setDate(b.getDate()-n);prev=stAgg(dayOf(a),dayOf(b),stG);}
+  var pal=0,dul=0;Object.keys(all.map).forEach(function(k){if(all.map[k].gr==='pal')pal+=all.map[k].money;else dul+=all.map[k].money;});
+  var tt=pal+dul,pp=tt?Math.round(pal*1000/tt)/10:0,dp=tt?Math.round(dul*1000/tt)/10:0;
+  function dl(c,p){if(!prev)return '';if(!p)return c?'<span class="up">nuevo</span>':'';var v=Math.round((c-p)*100/p);return '<span class="'+(v>=0?'up':'dn')+'">'+(v>=0?'▲ ':'▼ ')+Math.abs(v)+'%</span>';}
+  var rows=Object.keys(cur.map).map(function(k){var o=cur.map[k];o.k=k;return o;}).sort(function(x,y){return y.money-x.money;}).slice(0,10),mx=rows[0].money,h='';
+  h+='<div class="kp"><div><small>Vendido</small><b>'+fmt(cur.T)+'</b>'+(prev?dl(cur.T,prev.T)+' <small>vs periodo anterior</small>':'')+'</div><div><small>Ventas</small><b>'+cur.N+'</b>'+(prev?dl(cur.N,prev.N):'')+'</div></div>';
+  h+='<div class="split"><div class="donut" style="background:conic-gradient(#f59e0b 0 '+pp+'%,var(--price) '+pp+'% 100%)"></div><div class="lg"><div><span class="dot" style="background:#f59e0b"></span>Palomitas <b>'+pp+'%</b> · '+fmt(pal)+'</div><div><span class="dot" style="background:var(--price)"></span>Dulces <b>'+dp+'%</b> · '+fmt(dul)+'</div></div></div>';
+  h+='<div class="hd">🏆 Lo más vendido <small>(% de lo vendido'+(stG==='all'?'':' en '+(stG==='pal'?'palomitas':'dulces'))+')</small></div>';
+  rows.forEach(function(o,i){var sh=Math.round(o.money*1000/cur.T)/10,pv=prev&&prev.map[o.k]?prev.map[o.k].money:0;
+    h+='<div class="rk"><div class="t"><b>'+(i<3?['🥇','🥈','🥉'][i]:'#'+(i+1))+' '+esc(o.name)+'</b><span>'+fmt(o.money)+'</span></div><div class="bar'+(o.gr==='pal'?' p':'')+'"><i style="width:'+Math.max(3,Math.round(o.money*100/mx))+'%"></i></div><small>'+sh+'% · '+fmtS(o.t==='gr'?'gr':'pz',o.qty)+' '+dl(o.money,pv)+'</small></div>';});
+  $('stb').innerHTML=h;}
+function stPick(id,attr,fn){$(id).addEventListener('click',function(e){var b=e.target.closest('['+attr+']');if(!b)return;fn(b);Array.prototype.forEach.call($(id).children,function(x){x.classList.toggle('on',x===b);});renderStats();});}
+stPick('stp','data-p',function(b){stP=+b.dataset.p;});stPick('stg','data-g',function(b){stG=b.dataset.g;});
+/* ================= SINCRONIZAR / RESPALDO ================= */
+$('sy').onclick=function(){
+  var o=document.createElement('div');o.className='ov';document.body.appendChild(o);
+  function draw(){var b=baseUrl();
+    o.innerHTML='<div class="sheet"><h3>Sincronizar aparatos</h3><p style="margin:0 0 8px;color:var(--mute)">'+(b?(syncErr?'Sin conexión: los movimientos se guardan aquí y se envían cuando vuelva el internet.':(pending.length?pending.length+' movimientos por enviar.':'Conectado. Todo está sincronizado.')):'Aún no está conectado: cada aparato trabaja solo.')+'</p>'+
+    (b?'<p style="margin:0 0 4px;font-size:13px;color:var(--mute)">Código de conexión (pégalo en el otro aparato):</p><input class="fld" id="scc" readonly value="'+esc(b)+'" style="margin-bottom:8px"><button class="btn s" id="scp">Copiar código</button><div class="gap"></div><button class="btn s" id="scd">Desconectar este aparato</button>'
+      :'<input class="fld" id="sc" placeholder="Pega aquí el código de conexión" style="margin-bottom:8px"><button class="btn" id="scg">Conectar con código</button><div class="gap"></div><button class="btn s" id="scn">Solo el primer aparato: crear conexión nueva</button><p style="margin:6px 0 0;font-size:12px;color:var(--mute)">Los demás aparatos siempre usan el código del primero. Crear una conexión nueva hace una carpeta vacía.</p>')+
+    '<h3 style="margin-top:16px;font-size:16px">Respaldo a mano</h3><button class="btn s" id="sxp">Descargar respaldo</button><div class="gap"></div><button class="btn s" id="sim">Importar respaldo</button><div class="gap"></div><button class="btn s" id="sx">Cerrar</button></div>';
+    o.querySelector('#sx').onclick=function(){o.remove();};
+    o.querySelector('#sxp').onclick=function(){saveFile('Respaldo_AP_'+dayOf(new Date())+'.json',JSON.stringify({app:'ap',v:1,ev:events}),'application/json');};
+    o.querySelector('#sim').onclick=function(){$('sf').click();};
+    if(b){o.querySelector('#scp').onclick=function(){var i=o.querySelector('#scc');i.select();try{navigator.clipboard.writeText(b);toast('Código copiado');}catch(e){toast('Mantén presionado el código para copiarlo');}};
+      o.querySelector('#scd').onclick=function(){cfg=null;lsSet('ap_sync',null);syncErr='';stat();draw();};}
+    else{var armedC=false,go=function(create){var v=o.querySelector('#sc').value.trim().replace(/\.json$/,'').replace(/\/+$/,'');
+    if(!/^https:\/\/[^\s]+$/.test(v)){toast('Pega la URL o el código completo (empieza con https://)');return;}
+    var plain=/^https:\/\/[^\/]+$/.test(v);
+    if(!create&&plain){toast('Eso es solo la URL de la base. Pega el código completo que da el otro aparato.');return;}
+    if(create&&!plain){toast('Para crear una conexión nueva pega solo la URL de la base.');return;}
+    if(create)v+='/ap-'+Math.random().toString(36).slice(2,10)+Math.random().toString(36).slice(2,10);
+    cfg={base:v};lsSet('ap_sync',cfg);events.forEach(function(e){if(pending.indexOf(e.id)<0)pending.push(e.id);});persistEv();
+    toast('Conectando…');flush().then(function(){return pull(true);}).then(function(){draw();});};
+  o.querySelector('#scg').onclick=function(){go(false);};
+  o.querySelector('#scn').onclick=function(){if(!armedC){armedC=true;this.textContent='¿Seguro? Toca otra vez para crear';return;}go(true);};}
+  }
+  o.addEventListener('click',function(e){if(e.target===o)o.remove();});draw();
+};
+$('sf').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){try{var j=JSON.parse(rd.result),have={},n=0;events.forEach(function(x){have[x.id]=1;});
+    (j.ev||[]).forEach(function(x){if(x&&x.id&&x.t&&!have[x.id]){events.push(x);if(baseUrl())pending.push(x.id);n++;}});
+    persistEv();rebuild();refresh();flush();toast('Importados '+n+' movimientos nuevos');}catch(er){toast('El archivo no es un respaldo válido');}e.target.value='';};
+  rd.readAsText(f);});
+/* ================= INVENTARIO Y ACCESO (solo jefe) ================= */
+function renderInv(){var t=norm($('iq').value),f=$('ifl').value,rows=[];
+  document.querySelectorAll('#pz .it,#gr .it,#pa .it').forEach(function(it){rows.push(it.dataset);});
+  rows.sort(function(a,b){return norm(a.n)<norm(b.n)?-1:1;});
+  $('il').innerHTML=rows.filter(function(d){var r=inv[d.id],T=r?tot(r):null;if(t&&norm(d.n+' '+d.l).indexOf(t)<0)return false;
+    return f==='all'||(f==='none'&&!r)||(f==='out'&&r&&T<=0)||(f==='yes'&&r&&T>0)||(f==='low'&&r&&T>0&&T<=(d.t==='gr'?300:3));}).map(function(d){var r=inv[d.id],T=r?tot(r):0,g=d.t==='gr';
+    return '<div class="ir" data-id="'+esc(d.id)+'"><div class="ih"><b>'+esc(d.n)+'</b><button class="x" data-a="aj">Ajustar</button></div><small>'+(r?(T>0?'Quedan '+fmtS(g?'gr':'pz',T)+(T<=(g?300:3)?' ⚠ pocas':'')+(d.f&&r.lines.length>1?' · '+r.lines.length+' sabores':''):'Agotado'):'Sin registrar')+(d.l?' · '+esc(d.l):'')+'</small>'+
+      '<div class="ia">'+(d.f?'<input class="fld" data-r="s" placeholder="Sabor">':'')+'<input class="fld" data-r="q" type="number" inputmode="decimal" min="0" step="any" placeholder="'+(g?'Cantidad':'Piezas')+'">'+(g?'<select class="fld" data-r="u"><option value="1000">kg</option><option value="1">g</option></select>':'')+'<button class="btn" data-a="add">+ Agregar</button></div></div>';}).join('')||'<p style="color:var(--mute);text-align:center;padding:20px 0">Sin resultados</p>';}
+function invDlg(d){var o=document.createElement('div');o.className='ov';document.body.appendChild(o);var g=d.t==='gr';
+  function draw(){var r=inv[d.id];
+    o.innerHTML='<div class="sheet"><h3>'+esc(d.n)+'</h3><p style="margin:0 0 6px;color:var(--mute)">'+(r?'Corrige la existencia si hace falta:':'Sin registrar: se vende sin descontar hasta que agregues inventario.')+'</p>'+
+    (r?r.lines.map(function(x,i){return '<div class="row"><div class="nm"><b>'+esc(x.s||'Existencia')+'</b></div><div class="st"><input type="number" inputmode="numeric" min="0" data-li="'+i+'" value="'+x.q+'"><small>'+(g?'g':'pz')+'</small></div><button class="x" data-ld="'+i+'">✕</button></div>';}).join(''):'')+
+    (d.cu?'<h3 style="margin-top:14px;font-size:16px">Precio'+(d.t==='gr'?' por 100 g':'')+'</h3><div style="display:flex;gap:8px"><input class="fld" id="cpp" type="number" inputmode="decimal" step="any" min="0" value="'+(d.p/100)+'"><button class="btn" id="cpb" style="width:auto;padding:0 16px">Guardar</button></div><div class="gap"></div><button class="btn s" id="cpd">Eliminar esta palomita</button>':'')+
+    '<div class="gap"></div>'+(r?'<button class="btn s" id="ar">Dejar de controlar este producto</button><div class="gap"></div>':'')+'<button class="btn s" id="ac">Cerrar</button></div>';
+    o.querySelectorAll('[data-li]').forEach(function(e){e.addEventListener('change',function(){var x=inv[d.id].lines[+e.dataset.li];emit({t:'set',p:d.id,s:x.s,q:Math.max(0,Math.floor(+e.value||0))});draw();});});
+    o.querySelectorAll('[data-ld]').forEach(function(e){e.onclick=function(){emit({t:'del',p:d.id,s:inv[d.id].lines[+e.dataset.ld].s});draw();};});
+    o.querySelector('#ac').onclick=function(){o.remove();};
+    if(d.cu){o.querySelector('#cpb').onclick=function(){var v=+o.querySelector('#cpp').value;if(!(v>0)){toast('Escribe el precio');return;}emit({t:'palp',pid:d.id,p:Math.round(v*100)});toast('Precio actualizado: '+fmt(Math.round(v*100)));o.remove();};
+      var dd=false;o.querySelector('#cpd').onclick=function(){if(!dd){dd=true;this.textContent='¿Seguro? Toca otra vez para eliminar';return;}emit({t:'paldel',pid:d.id});toast('Palomita eliminada');o.remove();};}
+    if(r)o.querySelector('#ar').onclick=function(){emit({t:'untrack',p:d.id});draw();};}
+  o.addEventListener('click',function(e){if(e.target===o)o.remove();});draw();}
+function gdraw(){var c=mode==='create';
+  $('gt').textContent=c?(profs.length?'Agregar perfil':'Crea tu perfil'):'Productos AP';
+  $('gp').innerHTML=c?'':profs.map(function(p){return '<button class="chipb" data-n="'+esc(p.n)+'">👤 '+esc(p.n)+'</button>';}).join('');
+  $('gk2').classList.toggle('hide',!c);$('go').textContent=c?'Guardar perfil':'Entrar';
+  $('ga').classList.toggle('hide',!(profs.length&&(c||profs.length<2)));
+  $('ga').textContent=c?'Cancelar':'＋ Agregar perfil ('+profs.length+' de 2)';$('gm').textContent='';}
+function gate(){mode=profs.length?'login':'create';gdraw();$('gate').classList.remove('hide');}
+function enter(n){me=n;$('gk').value='';$('gk2').value='';$('gate').classList.add('hide');$('me').textContent='👤 '+n;refresh();}
+function h53(s,seed){var h1=0xdeadbeef^seed,h2=0x41c6ce57^seed;for(var i=0,c;i<s.length;i++){c=s.charCodeAt(i);h1=Math.imul(h1^c,2654435761);h2=Math.imul(h2^c,1597334677);}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0);}
+function hp(pw,salt){return h53(salt+pw,1).toString(36)+h53(pw+salt,2).toString(36);}
+if(ROLE==='jefe'){
+  $('iq').addEventListener('input',renderInv);$('ifl').addEventListener('change',renderInv);
+  $('il').addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!b)return;var row=b.closest('.ir'),d=prod(row.dataset.id);
+    if(b.dataset.a==='aj'){invDlg(d);return;}
+    var qv=+row.querySelector('[data-r=q]').value,u=row.querySelector('[data-r=u]'),se=row.querySelector('[data-r=s]'),n=Math.round(qv*(u?+u.value:1)),s=se?se.value.trim():'';
+    if(!(n>0)){toast('Escribe una cantidad');return;}if(!u&&qv!==Math.floor(qv)){toast('Pon piezas enteras');return;}if(d.f&&!s){toast('Escribe el sabor');return;}
+    emit({t:'in',p:d.id,s:s,q:n});toast('Agregado: '+d.n+(s?' ('+s+')':'')+' · '+fmtS(d.t==='gr'?'gr':'pz',n));renderInv();});
+  function npSync(){var c=$('npc').value;$('nps').classList.toggle('hide',c!=='pal');$('npu').classList.toggle('hide',c!=='gr');$('npp').placeholder=c==='gr'?'Precio por 100 g $':'Precio por pieza $';$('npq').placeholder=c==='gr'?'Cantidad':'Cantidad (piezas)';}
+  $('npc').addEventListener('change',npSync);npSync();
+  $('npb').onclick=function(){var cat=$('npc').value,nm=$('npn').value.trim(),sz=$('nps').value,pr=+$('npp').value,qn=+$('npq').value,u=cat==='gr'?+$('npu').value:1,q=Math.round(qn*u);
+    if(!nm){toast('Escribe el nombre del producto');return;}
+    if(!(pr>0)){toast('Escribe el precio');return;}
+    if(!(q>=1)){toast('Escribe la cantidad');return;}
+    if(cat!=='gr'&&qn!==Math.floor(qn)){toast('Pon piezas enteras');return;}
+    var full=cat==='pal'?'Palomitas '+sz.toLowerCase()+' · '+nm:nm,tab=cat==='pal'?'#pa':cat==='gr'?'#gr':'#pz',dup=false;
+    document.querySelectorAll(tab+' .it').forEach(function(it){if(norm(it.dataset.n)===norm(full))dup=true;});
+    if(dup){toast('Ya existe ese producto. Agrégale inventario desde la lista.');return;}
+    var pid=(cat==='pal'?'PA':cat==='gr'?'GR':'PZ')+':n-'+uid(),p=Math.round(pr*100);
+    emit({t:'newprod',pid:pid,name:nm,cat:cat,size:cat==='pal'?sz:'',p:p});emit({t:'in',p:pid,s:'',q:q});
+    $('npn').value='';$('npp').value='';$('npq').value='';toast('Creado: '+full+' · '+fmt(p)+(cat==='gr'?' por 100 g':''));};
+  $('gp').addEventListener('click',function(e){var b=e.target.closest('[data-n]');if(b){$('gn').value=b.dataset.n;$('gk').focus();}});
+  $('ga').onclick=function(){mode=mode==='create'?'login':'create';gdraw();};
+  $('out').onclick=function(){me=null;$('gn').value='';gate();};
+  $('go').onclick=function(){var n=$('gn').value.trim(),k=$('gk').value,msg=$('gm');
+    if(!n||!k){msg.textContent='Escribe nombre y contraseña';return;}
+    if(mode==='create'){
+      if(profs.length>=2){msg.textContent='Ya hay 2 perfiles';return;}
+      if(k.length<4){msg.textContent='La contraseña debe tener al menos 4 caracteres';return;}
+      if(k!==$('gk2').value){msg.textContent='Las contraseñas no coinciden';return;}
+      if(profs.some(function(p){return norm(p.n)===norm(n);})){msg.textContent='Ya existe un perfil con ese nombre';return;}
+      var s=Math.random().toString(36).slice(2)+Date.now().toString(36);profs.push({n:n,s:s,h:hp(k,s)});lsSet('ap_profiles',profs);enter(n);return;}
+    var p=profs.filter(function(p){return norm(p.n)===norm(n);})[0];
+    if(!p||p.h!==hp(k,p.s)){msg.textContent='Nombre o contraseña incorrectos';return;}enter(p.n);};
+  ['gn','gk','gk2'].forEach(function(i){$(i).addEventListener('keydown',function(e){if(e.key==='Enter')$('go').click();});});
+  gate();
+}
+rebuild();paintStock();stat();renderBar();run();
+if(baseUrl()){pull(true).then(function(){return flush();});}
+})();
+</script></body></html>
